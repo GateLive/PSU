@@ -685,7 +685,7 @@ function tick(){
   document.getElementById('clk').textContent=h+':'+m;
 }
 tick();setInterval(tick,1000);
-const target=Date.now()+(1*3600+47*60+22)*1000;
+const target = Date.now() + (30 * 60 * 1000);
 function countdown(){
   const d=Math.max(0,target-Date.now());
   document.getElementById('ch').textContent=String(Math.floor(d/3600000)).padStart(2,'0');
