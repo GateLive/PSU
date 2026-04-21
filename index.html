@@ -1,719 +1,840 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gate Live · Demo</title>
+<title>Gate Live · Boardintg</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ══ THEME TOKENS ═════════════════════════════ */
-:root {
+:root{
   --blue:#4da6ff;--green:#28d47e;--amber:#f5c030;--red:#ff5f5f;
-  --r:22px;--r-sm:13px;
-  --trans:all 0.38s cubic-bezier(0.4,0,0.2,1);
+  --navy:#080b18;--border:rgba(255,255,255,.09);
+  --t1:rgba(255,255,255,.95);--t2:rgba(255,255,255,.52);--t3:rgba(255,255,255,.28);
+  --r:16px;--trans:all .32s cubic-bezier(.4,0,.2,1);
 }
-[data-theme="dark"] {
-  --bg-page:#06080f;--bg-frame:#0c0e1a;
-  --bg-screen:linear-gradient(175deg,#0d1122 0%,#080a14 100%);
-  --orb1:rgba(50,80,255,0.22);--orb2:rgba(120,40,255,0.16);--orb3:rgba(18,155,125,0.10);
-  --ph-border:rgba(255,255,255,0.10);--ph-shadow:rgba(0,0,0,0.78);
-  --sc-b:rgba(55,85,255,0.16);--sc-a:rgba(120,40,255,0.09);
-  --t1:rgba(255,255,255,0.97);--t2:rgba(255,255,255,0.52);--t3:rgba(255,255,255,0.27);
-  --cd-bg:linear-gradient(148deg,rgba(255,255,255,0.10) 0%,rgba(255,255,255,0.042) 55%,rgba(255,255,255,0.07) 100%);
-  --cd-br:rgba(255,255,255,0.13);--cd-top:rgba(255,255,255,0.28);--cd-left:rgba(255,255,255,0.19);
-  --cd-sh:0 8px 30px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(0,0,0,0.18);
-  --cd-shine:rgba(255,255,255,0.38);
-  --cb-bg:linear-gradient(148deg,rgba(94,174,255,0.13) 0%,rgba(255,255,255,0.04) 55%,rgba(120,80,255,0.08) 100%);
-  --cb-br:rgba(94,174,255,0.22);
-  --cg-bg:linear-gradient(148deg,rgba(48,217,136,0.11) 0%,rgba(255,255,255,0.04) 60%,rgba(30,180,120,0.06) 100%);
-  --cg-br:rgba(48,217,136,0.22);
-  --ca-bg:linear-gradient(148deg,rgba(255,200,68,0.11) 0%,rgba(255,255,255,0.04) 60%);
-  --ca-br:rgba(255,200,68,0.25);--ca-top:rgba(255,200,68,0.40);
-  --nav-bg:linear-gradient(to top,rgba(6,8,15,0.97) 0%,rgba(6,8,15,0.70) 100%);
-  --ni:rgba(255,255,255,0.32);--nl:rgba(255,255,255,0.32);--non:rgba(255,255,255,0.07);
-  --pb:rgba(255,255,255,0.09);--dv:rgba(255,255,255,0.06);--sec:rgba(255,255,255,0.28);
-  --gd-bg:rgba(40,212,126,0.10);--gd-br:rgba(40,212,126,0.22);--gd-t:var(--green);
-  --gn-bg:rgba(77,166,255,0.16);--gn-br:rgba(77,166,255,0.38);--gn-t:var(--blue);
-  --gw-bg:rgba(255,255,255,0.04);--gw-br:rgba(255,255,255,0.09);--gw-t:rgba(255,255,255,0.27);
-  --bb-bg:rgba(77,166,255,0.18);--bb-br:rgba(77,166,255,0.32);--bb-t:var(--blue);
-  --si:rgba(255,255,255,0.88);--sd:rgba(255,255,255,0.28);
-  --hb:rgba(255,255,255,0.22);--hint:rgba(255,255,255,0.16);
-  --tk-tr:rgba(255,255,255,0.12);--tk-kn:#ffffff;
-  --atm:rgba(255,255,255,0.90);--atl:rgba(255,255,255,0.40);
-}
-[data-theme="light"] {
-  --bg-page:#e4e8f4;--bg-frame:#d8dcea;
-  --bg-screen:linear-gradient(175deg,#edf1fb 0%,#e2e6f5 100%);
-  --orb1:rgba(100,140,255,0.18);--orb2:rgba(150,80,255,0.10);--orb3:rgba(30,180,150,0.08);
-  --ph-border:rgba(255,255,255,0.68);--ph-shadow:rgba(140,155,200,0.32);
-  --sc-b:rgba(100,140,255,0.10);--sc-a:rgba(150,80,255,0.06);
-  --t1:rgba(12,16,38,0.96);--t2:rgba(12,16,38,0.50);--t3:rgba(12,16,38,0.30);
-  --cd-bg:linear-gradient(148deg,rgba(255,255,255,0.80) 0%,rgba(255,255,255,0.55) 55%,rgba(255,255,255,0.70) 100%);
-  --cd-br:rgba(255,255,255,0.72);--cd-top:rgba(255,255,255,0.94);--cd-left:rgba(255,255,255,0.84);
-  --cd-sh:0 8px 30px rgba(100,120,180,0.10),inset 0 1px 0 rgba(255,255,255,0.92),inset 0 -1px 0 rgba(0,0,0,0.03);
-  --cd-shine:rgba(255,255,255,0.92);
-  --cb-bg:linear-gradient(148deg,rgba(77,166,255,0.12) 0%,rgba(255,255,255,0.54) 55%,rgba(120,80,255,0.07) 100%);
-  --cb-br:rgba(77,166,255,0.28);
-  --cg-bg:linear-gradient(148deg,rgba(40,212,126,0.10) 0%,rgba(255,255,255,0.54) 60%,rgba(30,180,120,0.05) 100%);
-  --cg-br:rgba(40,212,126,0.28);
-  --ca-bg:linear-gradient(148deg,rgba(245,192,48,0.12) 0%,rgba(255,255,255,0.56) 60%);
-  --ca-br:rgba(245,192,48,0.30);--ca-top:rgba(245,192,48,0.52);
-  --nav-bg:linear-gradient(to top,rgba(228,232,244,0.97) 0%,rgba(228,232,244,0.75) 100%);
-  --ni:rgba(12,16,38,0.32);--nl:rgba(12,16,38,0.32);--non:rgba(12,16,38,0.06);
-  --pb:rgba(12,16,38,0.09);--dv:rgba(12,16,38,0.07);--sec:rgba(12,16,38,0.32);
-  --gd-bg:rgba(40,212,126,0.12);--gd-br:rgba(40,212,126,0.28);--gd-t:#1a9a5e;
-  --gn-bg:rgba(77,166,255,0.14);--gn-br:rgba(77,166,255,0.35);--gn-t:#2070cc;
-  --gw-bg:rgba(12,16,38,0.05);--gw-br:rgba(12,16,38,0.10);--gw-t:rgba(12,16,38,0.30);
-  --bb-bg:rgba(77,166,255,0.13);--bb-br:rgba(77,166,255,0.28);--bb-t:#2070cc;
-  --si:rgba(12,16,38,0.78);--sd:rgba(12,16,38,0.26);
-  --hb:rgba(12,16,38,0.22);--hint:rgba(12,16,38,0.18);
-  --tk-tr:rgba(12,16,38,0.10);--tk-kn:#ffffff;
-  --atm:rgba(12,16,38,0.42);--atl:rgba(12,16,38,0.90);
-}
-
-/* ══ RESET ════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-page);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;-webkit-font-smoothing:antialiased;transition:background .4s;}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:#04060e;min-height:100vh;display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased;}
 
-/* ── Orbs ── */
-.orb{position:fixed;border-radius:50%;pointer-events:none;filter:blur(90px);z-index:0;transition:background .4s;}
-.orb-1{width:620px;height:620px;top:-170px;right:-170px;background:radial-gradient(circle,var(--orb1) 0%,transparent 68%);}
-.orb-2{width:520px;height:520px;bottom:-130px;left:-130px;background:radial-gradient(circle,var(--orb2) 0%,transparent 68%);}
-.orb-3{width:290px;height:290px;top:45%;left:38%;background:radial-gradient(circle,var(--orb3) 0%,transparent 68%);}
+/* Phone */
+.phone{width:390px;height:844px;border-radius:52px;background:var(--navy);border:1px solid rgba(255,255,255,.08);box-shadow:0 0 0 1px rgba(255,255,255,.02),0 50px 100px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.10);overflow:hidden;display:flex;flex-direction:column;position:relative;flex-shrink:0;}
+.island{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:122px;height:36px;background:#000;border-radius:20px;z-index:200;}
+.sbar{display:flex;align-items:center;justify-content:space-between;padding:15px 28px 0;height:54px;font-size:15px;font-weight:600;color:var(--t1);flex-shrink:0;position:relative;z-index:10;}
+.screen{flex:1;overflow:hidden;position:relative;background:linear-gradient(170deg,#0c0f1e 0%,#060810 100%);}
 
-/* ── Theme toggle ── */
-.tgl{position:fixed;top:24px;right:24px;z-index:100;display:flex;align-items:center;gap:9px;background:var(--cd-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--cd-br);border-top-color:var(--cd-top);box-shadow:0 4px 22px rgba(0,0,0,0.16);border-radius:40px;padding:8px 14px 8px 10px;cursor:pointer;transition:var(--trans);user-select:none;}
-.tgl:hover{transform:scale(1.03);}
-.tgl-lbl{font-size:12px;font-weight:600;color:var(--t2);letter-spacing:.2px;transition:color .35s;}
-.tgl-trk{width:38px;height:22px;border-radius:11px;background:var(--tk-tr);position:relative;transition:background .35s;border:1px solid var(--cd-br);flex-shrink:0;}
-[data-theme="light"] .tgl-trk{background:var(--blue);}
-.tgl-knob{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--tk-kn);box-shadow:0 1px 4px rgba(0,0,0,.25);transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
-[data-theme="light"] .tgl-knob{transform:translateX(16px);}
-.ico-moon,.ico-sun{transition:opacity .3s;flex-shrink:0;}
-.ico-sun{opacity:0;position:absolute;left:10px;}
-[data-theme="light"] .ico-sun{opacity:1;}
-[data-theme="light"] .ico-moon{opacity:0;}
+/* Screen views */
+.sv{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;opacity:0;pointer-events:none;transform:translateX(18px);transition:opacity .3s,transform .3s cubic-bezier(.4,0,.2,1);}
+.sv::-webkit-scrollbar{display:none;}
+.sv.show{opacity:1;pointer-events:auto;transform:translateX(0);}
+.sv.exit-left{opacity:0;transform:translateX(-18px);}
 
-/* ── Phone ── */
-.phone{position:relative;z-index:10;width:390px;height:844px;border-radius:52px;background:var(--bg-frame);border:1px solid var(--ph-border);box-shadow:0 0 0 1px rgba(255,255,255,.03),0 50px 100px var(--ph-shadow),inset 0 1px 0 rgba(255,255,255,.12);overflow:hidden;display:flex;flex-direction:column;flex-shrink:0;transition:background .4s,border-color .4s,box-shadow .4s;}
-.island{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:122px;height:36px;background:#000;border-radius:20px;z-index:200;display:flex;align-items:center;justify-content:center;}
-.island-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.08);}
+/* Cards */
+.card{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin:0 16px 10px;position:relative;overflow:hidden;}
+.card::after{content:'';position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);}
+.card-blue{background:linear-gradient(148deg,rgba(20,35,70,.95),rgba(10,18,42,.9));border-color:rgba(77,166,255,.22);border-top-color:rgba(77,166,255,.35);}
 
-/* ── Status bar ── */
-.sbar{display:flex;align-items:center;justify-content:space-between;padding:15px 30px 0;height:54px;font-size:15px;font-weight:600;color:var(--t1);letter-spacing:-.2px;flex-shrink:0;transition:color .35s;}
-.sbar-r{display:flex;align-items:center;gap:5px;}
-.si{fill:var(--si);transition:fill .35s;}
-.sd{fill:var(--sd);transition:fill .35s;}
-.ss{stroke:var(--si);transition:stroke .35s;}
-.ssd{stroke:var(--sd);transition:stroke .35s;}
+/* Typography */
+.lbl{font-size:9.5px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;}
+.sec-lbl{font-size:10.5px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.7px;margin:4px 20px 8px;}
+.t2{color:var(--t2);}
 
-/* ── Screen ── */
-.screen{flex:1;overflow:hidden;display:flex;flex-direction:column;position:relative;background:var(--bg-screen);transition:background .4s;}
-.screen::before{content:'';position:absolute;top:0;right:0;width:280px;height:280px;background:radial-gradient(circle,var(--sc-b) 0%,transparent 70%);pointer-events:none;z-index:0;transition:background .4s;}
-.screen::after{content:'';position:absolute;bottom:80px;left:-40px;width:200px;height:200px;background:radial-gradient(circle,var(--sc-a) 0%,transparent 70%);pointer-events:none;z-index:0;transition:background .4s;}
+/* Header */
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 20px 6px;}
+.hdr-right{display:flex;align-items:center;gap:8px;}
+.boarding-badge{background:rgba(77,166,255,.15);border:1px solid rgba(77,166,255,.35);color:var(--blue);font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:5px 13px;border-radius:20px;display:flex;align-items:center;gap:5px;}
+.pulse{width:5px;height:5px;border-radius:50%;background:currentColor;animation:pd 2s infinite;}
+@keyframes pd{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.72)}}
+.settings-btn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--trans);flex-shrink:0;}
+.settings-btn:hover{background:rgba(255,255,255,.14);}
 
-/* ── Panes ── */
-.pane{display:none;flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 18px 96px;position:relative;z-index:1;scrollbar-width:none;}
-.pane::-webkit-scrollbar{display:none;}
-.pane.show{display:block;}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.pane.show>*{animation:up .28s ease both;}
-.pane.show>*:nth-child(1){animation-delay:.00s}
-.pane.show>*:nth-child(2){animation-delay:.04s}
-.pane.show>*:nth-child(3){animation-delay:.08s}
-.pane.show>*:nth-child(4){animation-delay:.12s}
-.pane.show>*:nth-child(5){animation-delay:.15s}
-.pane.show>*:nth-child(6){animation-delay:.18s}
-.pane.show>*:nth-child(7){animation-delay:.21s}
-.pane.show>*:nth-child(8){animation-delay:.23s}
-.pane.show>*:nth-child(9){animation-delay:.25s}
-.pane.show>*:nth-child(10){animation-delay:.27s}
+/* Flight card */
+.flight-card-wrap{margin:0 16px 10px;cursor:pointer;}
+.flight-card-wrap:hover .card-blue{filter:brightness(1.06);}
+.flight-meta{display:flex;justify-content:space-between;margin-bottom:14px;}
+.fm-val{font-size:15px;font-weight:700;color:var(--t1);}
+.route{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;}
+.rcity{text-align:center;flex:1;}
+.iata{font-size:36px;font-weight:800;letter-spacing:-1.5px;color:var(--t1);line-height:1;}
+.rtime-lbl{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;}
+.rtime-val{font-size:11px;font-weight:600;color:var(--t2);margin-top:2px;}
+.rmid{display:flex;align-items:center;padding:0 8px;margin-top:10px;flex-shrink:0;}
+.rline{width:36px;height:1px;}
+.rline-l{background:linear-gradient(90deg,transparent,rgba(77,166,255,.5));}
+.rline-r{background:linear-gradient(90deg,rgba(77,166,255,.5),transparent);}
+.rdot{width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue);}
+.bt-section{border-top:1px solid rgba(255,255,255,.07);padding-top:14px;text-align:center;}
+.bt-lbl{font-size:9.5px;color:rgba(77,166,255,.8);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.bt-time{font-size:28px;font-weight:800;color:var(--t1);letter-spacing:-1px;margin-bottom:10px;}
+.cd-lbl{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.cd-row{display:flex;align-items:center;justify-content:center;gap:3px;padding-bottom:2px;}
+.cd-unit .cn{font-size:38px;font-weight:800;letter-spacing:-2.5px;color:var(--t1);font-family:'DM Mono',monospace;line-height:1;}
+.cd-unit .cs{font-size:8px;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;}
+.cd-sep{font-size:30px;font-weight:300;color:var(--t3);line-height:1;margin-bottom:12px;}
 
-/* ── Cards ── */
-.card{background:var(--cd-bg);backdrop-filter:blur(32px) saturate(170%);-webkit-backdrop-filter:blur(32px) saturate(170%);border-radius:var(--r);border:1px solid var(--cd-br);border-top-color:var(--cd-top);border-left-color:var(--cd-left);box-shadow:var(--cd-sh);padding:17px 18px;margin-bottom:10px;position:relative;overflow:hidden;transition:var(--trans);}
-.card::after{content:'';position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--cd-shine),transparent);}
-.card-blue{background:var(--cb-bg);border-color:var(--cb-br);border-top-color:var(--cd-top);}
-.card-green{background:var(--cg-bg);border-color:var(--cg-br);border-top-color:var(--cd-top);}
-.card-amber{background:var(--ca-bg);border-color:var(--ca-br);border-top-color:var(--ca-top);}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
-.grid2 .card{margin-bottom:0;}
+/* Alerts */
+.alert{margin:0 16px 8px;border-radius:13px;padding:10px 13px;display:flex;align-items:flex-start;gap:9px;}
+.alert-amber{background:rgba(245,192,48,.09);border:1px solid rgba(245,192,48,.28);}
+.alert-muted{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);}
+.alert-time{font-size:10px;color:var(--t3);margin-left:auto;flex-shrink:0;padding-left:6px;}
+.alert-msg{font-size:12px;font-weight:700;color:var(--amber);margin-bottom:2px;}
+.alert-body{font-size:11.5px;color:var(--t3);}
 
-/* ── Type ── */
-.t1{color:var(--t1);transition:color .35s;}
-.t2{color:var(--t2);transition:color .35s;}
-.t3{color:var(--t3);transition:color .35s;}
-.ptitle{font-size:27px;font-weight:700;letter-spacing:-.9px;color:var(--t1);margin-bottom:16px;padding-top:2px;transition:color .35s;}
-.sec-lbl{font-size:11px;font-weight:600;color:var(--sec);text-transform:uppercase;letter-spacing:.7px;margin:6px 0 9px;transition:color .35s;}
-.tl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px;transition:color .35s;}
-.tv{font-size:24px;font-weight:700;letter-spacing:-.6px;color:var(--t1);line-height:1.1;transition:color .35s;}
-.ts{font-size:11px;color:var(--t2);margin-top:3px;transition:color .35s;}
+/* Info row */
+.info-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 16px 10px;}
+.info-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:12px 13px;}
+.locked-btn{display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(77,166,255,.1);border:1px solid rgba(77,166,255,.24);border-radius:9px;padding:8px 6px;cursor:pointer;transition:var(--trans);}
+.locked-btn:hover{background:rgba(77,166,255,.18);}
+.locked-txt{font-size:9px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.4px;text-align:center;line-height:1.35;}
+.unlocked-val{font-size:22px;font-weight:800;color:var(--t1);letter-spacing:-.5px;display:none;}
+.unlocked-sub{font-size:10px;color:var(--t2);margin-top:3px;display:none;}
+.locked-btn.gone{display:none;}
+.unlocked-val.show,.unlocked-sub.show{display:block;}
 
-/* ── Header ── */
-.header{display:flex;align-items:center;justify-content:space-between;padding:4px 0 10px;}
-.logo{font-size:21px;font-weight:700;letter-spacing:-.7px;color:var(--t1);transition:color .35s;}
-.logo em{font-style:normal;color:var(--blue);}
-.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:11.5px;font-weight:600;letter-spacing:.15px;}
-.badge-on{background:var(--bb-bg);border:1px solid var(--bb-br);color:var(--bb-t);transition:var(--trans);}
-.pulse{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pd 2s ease-in-out infinite;}
-@keyframes pd{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
-
-/* ── Hero ── */
-.hero{background:var(--cb-bg);border-color:var(--cb-br);border-top-color:var(--cd-top);box-shadow:var(--cd-sh);padding:22px 20px;margin-bottom:10px;}
-.hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px;}
-.hero-meta{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
-.hero-pill{padding:8px 12px;border-radius:14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);min-width:92px;}
-[data-theme="light"] .hero-pill{background:rgba(12,16,38,0.04);border-color:rgba(12,16,38,0.08);}
-.hero-k{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px;transition:color .35s;}
-.hero-v{font-size:18px;font-weight:700;letter-spacing:-.5px;color:var(--t1);line-height:1.1;transition:color .35s;}
-.route{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
-.iata{font-size:33px;font-weight:700;letter-spacing:-1.2px;line-height:1;color:var(--t1);transition:color .35s;}
-.cname{font-size:10.5px;color:var(--t2);margin-top:3px;letter-spacing:.3px;transition:color .35s;}
-.rmid{flex:1;display:flex;align-items:center;padding:0 14px;}
-.rl{flex:1;height:1px;}
-.rl-l{background:linear-gradient(90deg,rgba(128,128,180,.2),var(--blue));}
-.rl-r{background:linear-gradient(90deg,var(--blue),rgba(128,128,180,.2));}
-.pdot{width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 10px var(--blue);flex-shrink:0;}
-.cdlbl{font-size:10.5px;color:var(--t2);letter-spacing:1.1px;text-transform:uppercase;text-align:center;margin-bottom:8px;transition:color .35s;}
-.cdown{display:flex;justify-content:center;align-items:baseline;gap:2px;}
-.cu{text-align:center;}
-.cn{font-size:50px;font-weight:700;letter-spacing:-3.5px;line-height:1;font-family:'DM Mono',monospace;color:var(--t1);transition:color .35s;}
-.csub{font-size:9.5px;color:var(--t3);letter-spacing:.6px;text-transform:uppercase;margin-top:4px;transition:color .35s;}
-.csep{font-size:34px;font-weight:300;color:var(--t3);line-height:1;margin:0 3px 14px;transition:color .35s;}
-
-/* ── Alert ── */
-.alert-strip{display:flex;gap:10px;align-items:flex-start;padding:11px 15px;border-radius:var(--r-sm);margin-bottom:10px;}
-.amsg{font-size:12.5px;font-weight:500;line-height:1.4;color:var(--amber);}
-.atime{font-size:10.5px;color:rgba(200,160,30,.6);margin-top:2px;}
-[data-theme="light"] .atime{color:rgba(160,120,10,.55);}
-
-/* ── Progress ── */
-.pb-wrap{height:5px;border-radius:3px;background:var(--pb);overflow:hidden;margin-bottom:13px;transition:background .35s;}
+/* Boarding progress */
+.board-sect{margin:0 16px 10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 16px;}
+.board-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.board-status{font-size:12.5px;color:var(--t2);}
+.board-pct{font-size:28px;font-weight:700;letter-spacing:-1px;color:var(--blue);}
+.pb-wrap{height:5px;border-radius:3px;background:rgba(255,255,255,.09);overflow:hidden;margin-bottom:12px;}
 .pb-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),rgba(130,80,255,.85));}
-.pct{font-size:30px;font-weight:700;letter-spacing:-1px;color:var(--blue);}
-.groups{display:flex;gap:5px;}
-.grp{flex:1;text-align:center;padding:7px 2px;border-radius:10px;font-size:10px;font-weight:600;transition:var(--trans);}
+.grp-row{display:flex;gap:5px;}
+.grp{flex:1;text-align:center;padding:7px 2px;border-radius:10px;font-size:10px;font-weight:600;}
 .grp-n{font-size:15px;margin-bottom:2px;font-weight:700;}
-.gd{background:var(--gd-bg);border:1px solid var(--gd-br);color:var(--gd-t);}
-.gn{background:var(--gn-bg);border:1px solid var(--gn-br);color:var(--gn-t);}
-.gw{background:var(--gw-bg);border:1px solid var(--gw-br);color:var(--gw-t);}
+.grp-d{background:rgba(40,212,126,.10);border:1px solid rgba(40,212,126,.22);color:var(--green);}
+.grp-a{background:rgba(77,166,255,.16);border:1px solid rgba(77,166,255,.38);color:var(--blue);}
+.grp-w{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);color:var(--t3);}
 
-/* ── Lug row ── */
-.lug-row{display:flex;align-items:center;gap:12px;}
-.lug-ico{width:36px;height:36px;border-radius:10px;flex-shrink:0;background:rgba(40,212,126,.12);border:1px solid rgba(40,212,126,.24);display:flex;align-items:center;justify-content:center;}
-.chk{margin-left:auto;width:22px;height:22px;border-radius:50%;flex-shrink:0;background:rgba(40,212,126,.14);display:flex;align-items:center;justify-content:center;}
+/* Map widget */
+.map-widget{margin:0 16px 10px;cursor:pointer;border-radius:14px;overflow:hidden;border:1px solid rgba(77,166,255,.18);transition:var(--trans);position:relative;height:118px;}
+.map-widget:hover{border-color:rgba(77,166,255,.4);filter:brightness(1.08);}
 
-/* ── Ann ── */
-.ann{display:flex;gap:9px;padding:9px 0;border-bottom:1px solid var(--dv);transition:border-color .35s;}
-.ann:first-child{padding-top:2px;}
-.ann:last-child{border-bottom:none;padding-bottom:2px;}
-.adot{width:5px;height:5px;border-radius:50%;margin-top:6px;flex-shrink:0;}
+/* Announcements preview (clickable) */
+.ann-preview{cursor:pointer;transition:var(--trans);}
+.ann-preview:hover{filter:brightness(1.08);}
+.ann-row{display:flex;gap:9px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.ann-row:first-child{padding-top:2px;}
+.ann-row:last-child{border-bottom:none;}
+.adot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.ann-text{font-size:12px;line-height:1.45;color:var(--t1);}
+.ann-time{font-size:10px;color:var(--t3);margin-top:2px;}
+.view-all{text-align:center;font-size:11.5px;color:var(--blue);font-weight:600;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);margin-top:6px;}
 
-/* ── Nitem ── */
-.nitem{display:flex;gap:11px;padding:13px 0;border-bottom:1px solid var(--dv);transition:border-color .35s;}
-.nitem:last-child{border-bottom:none;padding-bottom:2px;}
-.nitem:first-child{padding-top:2px;}
-.nico{width:40px;height:40px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
-.nb{background:rgba(77,166,255,.12);border:1px solid rgba(77,166,255,.22);}
-.ng{background:rgba(40,212,126,.10);border:1px solid rgba(40,212,126,.22);}
-.na{background:rgba(245,192,48,.10);border:1px solid rgba(245,192,48,.22);}
-.nr{background:rgba(255,95,95,.10);border:1px solid rgba(255,95,95,.22);}
-.ntit{font-size:13.5px;font-weight:600;color:var(--t1);margin-bottom:3px;transition:color .35s;}
-.nbdy{font-size:12px;color:var(--t2);line-height:1.4;transition:color .35s;}
-.nti{font-size:10.5px;color:var(--t3);margin-top:4px;transition:color .35s;}
-.nud{width:7px;height:7px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:5px;}
+/* Back button */
+.back-btn{display:flex;align-items:center;gap:7px;padding:12px 20px 6px;cursor:pointer;color:var(--t2);font-size:13px;font-weight:500;border:none;background:none;font-family:'DM Sans',sans-serif;transition:var(--trans);}
+.back-btn:hover{color:var(--t1);}
 
-/* ── Phases ── */
-.phase{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--dv);transition:border-color .35s;}
-.phase:last-child{border-bottom:none;padding-bottom:2px;}
-.phase:first-child{padding-top:2px;}
-.pnum{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
-.pnum-d{background:var(--gd-bg);color:var(--gd-t);border:1px solid var(--gd-br);}
-.pnum-a{background:var(--gn-bg);color:var(--gn-t);border:1px solid var(--gn-br);}
-.pnum-w{background:var(--gw-bg);color:var(--gw-t);border:1px solid var(--gw-br);}
-.phi{flex:1;}
-.phtit{font-size:13.5px;font-weight:600;color:var(--t1);transition:color .35s;}
-.phdsc{font-size:11.5px;color:var(--t2);margin-top:2px;transition:color .35s;}
-.pst{font-size:10.5px;font-weight:600;padding:4px 9px;border-radius:7px;white-space:nowrap;}
-.pst-d{background:var(--gd-bg);color:var(--gd-t);}
-.pst-a{background:var(--gn-bg);color:var(--gn-t);}
-.pst-w{color:var(--gw-t);}
+/* Announcements screen */
+.speak-card{margin:0 16px 10px;background:#0d1428;border:1px solid rgba(77,166,255,.15);border-radius:16px;overflow:hidden;}
+.speak-header{font-size:10.5px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;padding:12px 16px 10px;}
+.speak-area{min-height:180px;padding:12px 16px 16px;display:flex;align-items:flex-start;}
+.speak-text{font-size:13px;line-height:1.6;color:var(--t2);font-style:italic;}
+.speak-placeholder{font-size:12px;color:var(--t3);}
+.speak-hint{font-size:10px;color:rgba(77,166,255,.5);padding:0 16px 12px;display:flex;align-items:center;gap:5px;}
 
-/* ── Lug steps ── */
-.lstep{display:flex;gap:11px;padding:8px 0;align-items:flex-start;}
-.lstep-l{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:2px;}
-.ldot{width:13px;height:13px;border-radius:50%;flex-shrink:0;}
-.ldc{background:var(--green);box-shadow:0 0 8px var(--green);}
-.ldp{background:var(--pb);}
-.lseg{width:1px;height:26px;margin:3px 0;}
-.lsf{background:rgba(40,212,126,.38);}
-.lse{background:var(--dv);}
+.timeline-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:var(--trans);}
+.timeline-item:hover{background:rgba(255,255,255,.02);}
+.timeline-item:last-child{border-bottom:none;}
+.tl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.tl-body{flex:1;}
+.tl-msg{font-size:12.5px;font-weight:500;color:var(--t1);line-height:1.4;}
+.tl-meta{font-size:10px;color:var(--t3);margin-top:3px;}
+.tl-play{font-size:10px;color:var(--blue);font-weight:600;margin-top:4px;}
 
-/* ── Strip ── */
-.strip{display:flex;gap:8px;margin-bottom:10px;}
-.sitem{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px;background:var(--cd-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--cd-br);border-top-color:var(--cd-top);border-radius:14px;box-shadow:var(--cd-sh);transition:var(--trans);}
-.sv{font-size:13px;font-weight:700;color:var(--t1);transition:color .35s;}
-.ss2{font-size:9.5px;color:var(--t3);transition:color .35s;}
+/* Overlays / Modals */
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.72);z-index:300;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);}
+.overlay.open{opacity:1;pointer-events:auto;}
+.sheet{width:100%;background:#0d1124;border-radius:24px 24px 0 0;border-top:1px solid rgba(255,255,255,.12);padding:14px 20px 50px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);position:relative;max-height:92%;}
+.overlay.open .sheet{transform:translateY(0);}
+.handle{width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.2);margin:0 auto 18px;}
+.sheet-title{font-size:17px;font-weight:700;color:var(--t1);text-align:center;margin-bottom:5px;letter-spacing:-.3px;}
+.sheet-sub{font-size:11.5px;color:var(--t3);text-align:center;margin-bottom:22px;}
+.sheet-close{position:absolute;top:14px;right:18px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.1);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-size:14px;transition:var(--trans);}
+.sheet-close:hover{background:rgba(255,255,255,.18);}
 
-/* ── Map ── */
-.map-ph{width:100%;height:90px;border-radius:12px;margin-bottom:13px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-.map-bg{position:absolute;inset:0;background:var(--gw-bg);transition:background .35s;}
-.map-grid{position:absolute;inset:0;opacity:.18;background-image:linear-gradient(var(--dv) 1px,transparent 1px),linear-gradient(90deg,var(--dv) 1px,transparent 1px);background-size:22px 22px;}
-.map-lbl{font-size:11px;font-weight:600;color:var(--blue);position:relative;z-index:1;margin-left:8px;}
+/* Scan modal */
+.scan-box{width:100%;height:175px;border:2px dashed rgba(77,166,255,.38);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;position:relative;overflow:hidden;background:rgba(77,166,255,.03);}
+.sc-corner{position:absolute;width:22px;height:22px;border-color:var(--blue);border-style:solid;border-width:0;}
+.sc-corner.tl{top:8px;left:8px;border-top-width:3px;border-left-width:3px;border-radius:4px 0 0 0;}
+.sc-corner.tr{top:8px;right:8px;border-top-width:3px;border-right-width:3px;border-radius:0 4px 0 0;}
+.sc-corner.bl{bottom:8px;left:8px;border-bottom-width:3px;border-left-width:3px;border-radius:0 0 0 4px;}
+.sc-corner.br{bottom:8px;right:8px;border-bottom-width:3px;border-right-width:3px;border-radius:0 0 4px 0;}
+.scan-line{position:absolute;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);animation:scan 2s ease-in-out infinite;}
+@keyframes scan{0%{top:18%}50%{top:78%}100%{top:18%}}
+.scan-note{font-size:10.5px;color:rgba(77,166,255,.65);text-align:center;z-index:1;}
+.btn-primary{width:100%;padding:14px;border-radius:14px;border:none;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;background:var(--blue);color:#fff;transition:var(--trans);}
+.btn-primary:hover{filter:brightness(1.1);}
+.btn-ghost{width:100%;padding:13px;border-radius:14px;border:1px solid rgba(255,255,255,.1);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;background:rgba(255,255,255,.05);color:var(--t2);margin-top:8px;transition:var(--trans);}
+.btn-ghost:hover{background:rgba(255,255,255,.1);}
 
-/* ── Food ── */
-.food{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--dv);transition:border-color .35s;}
-.food:last-child{border-bottom:none;padding-bottom:2px;}
-.food:first-child{padding-top:2px;}
-.fico{width:38px;height:38px;border-radius:10px;background:var(--gw-bg);border:1px solid var(--cd-br);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;transition:var(--trans);}
-.fdist{font-size:11px;color:var(--blue);font-weight:500;margin-left:auto;flex-shrink:0;}
+/* Language modal — light/cream theme matching image */
+.sheet-light{background:#ede9e1;border-top:1px solid rgba(0,0,0,.08);}
+.sheet-light .handle{background:rgba(0,0,0,.2);}
+.sheet-light .sheet-close{background:rgba(0,0,0,.1);color:rgba(0,0,0,.5);}
+.sheet-light .sheet-close:hover{background:rgba(0,0,0,.18);}
+.lang-pill{width:100%;padding:15px 20px;border-radius:999px;border:none;background:rgba(0,0,0,.13);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:rgba(0,0,0,.65);cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;transition:var(--trans);}
+.lang-pill:hover{background:rgba(0,0,0,.2);}
+.lang-dropdown{position:absolute;left:20px;right:20px;background:#e8e3da;border-radius:16px;border:1px solid rgba(0,0,0,.1);box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:10;overflow:hidden;display:none;}
+.lang-dropdown.open{display:block;}
+.lang-option{padding:13px 20px;font-size:13.5px;font-weight:500;color:rgba(0,0,0,.7);cursor:pointer;border-bottom:1px solid rgba(0,0,0,.06);transition:var(--trans);}
+.lang-option:last-child{border-bottom:none;}
+.lang-option:hover{background:rgba(0,0,0,.06);}
+.lang-option.active{color:rgba(0,0,0,.9);font-weight:700;}
+.scan-pill{width:100%;padding:15px 20px;border-radius:999px;border:none;background:rgba(0,0,0,.1);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:rgba(0,0,0,.55);cursor:pointer;transition:var(--trans);}
+.scan-pill:hover{background:rgba(0,0,0,.18);}
 
-/* ── Toggle (settings) ── */
-.tog-on{width:38px;height:22px;border-radius:11px;background:var(--blue);position:relative;flex-shrink:0;}
-.tog-on .tk{position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.2);}
-.tog-off{width:38px;height:22px;border-radius:11px;background:var(--gw-bg);border:1px solid var(--gw-br);position:relative;flex-shrink:0;}
-.tog-off .tk{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--tk-kn);box-shadow:0 1px 4px rgba(0,0,0,.2);}
+/* Flight detail modal */
+.flight-detail-scroll{overflow-y:auto;max-height:70vh;padding-bottom:4px;scrollbar-width:none;}
+.flight-detail-scroll::-webkit-scrollbar{display:none;}
+.fd-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.fd-lbl{font-size:9.5px;color:var(--t3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:2px;}
+.fd-flight{font-size:17px;font-weight:700;color:var(--t1);}
+.canceled-badge{background:var(--red);color:#fff;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 13px;border-radius:20px;}
+.fd-sec{margin-bottom:14px;}
+.fd-sec-ttl{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px;}
+.ctr-map{height:88px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;margin-bottom:10px;transition:var(--trans);}
+.ctr-map:hover{filter:brightness(1.1);}
+.ctr-note{font-size:11.5px;color:var(--t2);}
+.step{display:flex;gap:11px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.step:last-child{border-bottom:none;}
+.step-num{width:22px;height:22px;border-radius:50%;background:rgba(77,166,255,.13);border:1px solid rgba(77,166,255,.28);color:var(--blue);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.step-txt{font-size:11.5px;color:var(--t2);line-height:1.45;flex:1;}
+.opt-btn{width:100%;background:rgba(77,166,255,.09);border:1px solid rgba(77,166,255,.2);border-radius:12px;padding:12px 14px;color:var(--t1);font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;text-align:left;cursor:pointer;margin-bottom:8px;transition:var(--trans);display:flex;align-items:center;justify-content:space-between;}
+.opt-btn:last-of-type{margin-bottom:0;}
+.opt-btn:hover{background:rgba(77,166,255,.18);}
+.opt-sub{font-size:10.5px;color:var(--t3);margin-top:2px;font-weight:400;}
+.see-more{width:100%;background:none;border:none;color:var(--blue);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:10px;cursor:pointer;text-align:center;}
 
-/* ── Nav ── */
-.nav{position:absolute;bottom:0;left:0;right:0;z-index:50;display:flex;align-items:flex-start;padding:8px 10px 28px;background:var(--nav-bg);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);gap:2px;transition:background .4s;}
-.ntab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border-radius:12px;cursor:pointer;border:none;background:none;transition:background .2s;-webkit-tap-highlight-color:transparent;position:relative;}
-.ntab:hover,.ntab.on{background:var(--non);}
-.ni{width:22px;height:22px;stroke:var(--ni);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke .2s;}
-.ntab.on .ni{stroke:var(--blue);}
-.nl{font-size:9.5px;color:var(--nl);font-weight:500;letter-spacing:.3px;transition:color .2s;}
-.ntab.on .nl{color:var(--blue);}
-.nav-dot{position:absolute;top:6px;right:calc(50% - 15px);width:6px;height:6px;border-radius:50%;background:var(--red);}
-.hbar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:130px;height:5px;border-radius:3px;background:var(--hb);z-index:200;transition:background .35s;}
-.hint-txt{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);font-size:11.5px;color:var(--hint);z-index:1;letter-spacing:.4px;pointer-events:none;white-space:nowrap;transition:color .35s;}
+/* Map modal */
+.map-full{height:400px;border-radius:14px;overflow:hidden;position:relative;margin-bottom:14px;}
 
 @media(max-width:500px){
   .phone{width:100%;height:100vh;border-radius:0;border:none;box-shadow:none;}
   body{align-items:flex-start;}
-  .hint-txt{display:none;}
-  .tgl{top:12px;right:12px;}
 }
-
-.map-ph{width:100%;height:112px;border-radius:12px;margin-bottom:13px;display:flex;align-items:flex-end;justify-content:flex-start;position:relative;overflow:hidden;padding:12px;}
-.map-bg{position:absolute;inset:0;transition:background .35s;background:
-linear-gradient(180deg, rgba(191,221,182,.96) 0 100%),
-linear-gradient(90deg, transparent 0 8%, rgba(247,244,233,.98) 8% 15%, transparent 15% 31%, rgba(247,244,233,.98) 31% 38%, transparent 38% 56%, rgba(247,244,233,.98) 56% 62%, transparent 62% 100%),
-linear-gradient(0deg, transparent 0 14%, rgba(247,244,233,.98) 14% 20%, transparent 20% 42%, rgba(247,244,233,.98) 42% 48%, transparent 48% 67%, rgba(247,244,233,.98) 67% 73%, transparent 73% 100%);}
-.map-grid{position:absolute;inset:0;opacity:.08;background-image:linear-gradient(rgba(0,0,0,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.18) 1px,transparent 1px);background-size:24px 24px;}
-.map-lbl{font-size:11px;font-weight:700;color:#203244;position:relative;z-index:2;margin-left:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.92);border:1px solid rgba(32,50,68,.08);box-shadow:0 3px 10px rgba(0,0,0,.08);}
-.map-path,.map-terminal,.map-gate-pin,.map-road-shield{position:absolute;z-index:1;}
-.map-path{left:30px;right:46px;top:53px;height:0;border-top:3px dotted #2f80ed;}
-.map-terminal{right:10px;top:24px;width:90px;height:62px;border-radius:10px;background:rgba(224,232,238,.98);border:1px solid rgba(120,132,142,.22);box-shadow:inset 0 0 0 1px rgba(255,255,255,.45);}
-.map-terminal:before,.map-terminal:after{content:'';position:absolute;left:12px;right:12px;height:8px;border-radius:999px;background:rgba(175,188,198,.8);}
-.map-terminal:before{top:17px;}
-.map-terminal:after{top:35px;}
-.map-gate-pin{right:48px;top:45px;width:16px;height:16px;border-radius:50%;background:rgba(47,128,237,.18);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px rgba(47,128,237,.10);}
-.map-gate-pin:before{content:'';width:8px;height:8px;border-radius:50%;background:#2f80ed;}
-.map-road-shield{left:18px;top:42px;font-size:9px;font-weight:700;color:#23415c;background:#f4d35e;padding:3px 6px;border-radius:999px;border:1px solid rgba(0,0,0,.06);}
-
 </style>
 </head>
 <body>
 
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
-
-<!-- Theme toggle -->
-<div class="tgl" onclick="toggleTheme()">
-  <svg class="ico-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;" stroke="var(--atm)">
-    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-  </svg>
-  <svg class="ico-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="var(--atl)">
-    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-  </svg>
-  <div class="tgl-trk"><div class="tgl-knob"></div></div>
-  <span class="tgl-lbl" id="tgl-lbl">Dark</span>
-</div>
-
 <div class="phone">
-  <div class="island"><div class="island-dot"></div></div>
+  <div class="island"></div>
 
   <!-- Status bar -->
   <div class="sbar">
     <span id="clk">9:41</span>
-    <div class="sbar-r">
-      <svg width="17" height="13" viewBox="0 0 17 13" fill="none">
-        <rect x="0" y="7.5" width="3" height="5.5" rx="1" class="si"/>
-        <rect x="4.5" y="5" width="3" height="8" rx="1" class="si"/>
-        <rect x="9" y="2" width="3" height="11" rx="1" class="si"/>
-        <rect x="13.5" y="0" width="3" height="13" rx="1" class="sd"/>
-      </svg>
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
-        <circle cx="8" cy="10" r="1.3" class="si"/>
-        <path d="M5.1 7.3C6.1 6.3 7 5.9 8 5.9s1.9.4 2.9 1.4" class="ss" stroke-width="1.4" stroke-linecap="round"/>
-        <path d="M2.5 4.8C4.2 3 6 2.1 8 2.1s3.8.9 5.5 2.7" class="ssd" stroke-width="1.4" stroke-linecap="round"/>
-      </svg>
-      <svg width="26" height="13" viewBox="0 0 26 13" fill="none">
-        <rect x=".6" y=".6" width="21" height="11.8" rx="3.2" class="ssd" stroke-width="1.2"/>
-        <rect x="2" y="2" width="17" height="9" rx="2" class="si"/>
-        <path d="M23.5 4.5v4" class="ssd" stroke-width="2" stroke-linecap="round"/>
-      </svg>
+    <div style="display:flex;align-items:center;gap:5px;">
+      <svg width="17" height="13" viewBox="0 0 17 13" fill="none"><rect x="0" y="7.5" width="3" height="5.5" rx="1" fill="rgba(255,255,255,.9)"/><rect x="4.5" y="5" width="3" height="8" rx="1" fill="rgba(255,255,255,.9)"/><rect x="9" y="2" width="3" height="11" rx="1" fill="rgba(255,255,255,.9)"/><rect x="13.5" y="0" width="3" height="13" rx="1" fill="rgba(255,255,255,.28)"/></svg>
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><circle cx="8" cy="10" r="1.3" fill="rgba(255,255,255,.9)"/><path d="M5.1 7.3C6.1 6.3 7 5.9 8 5.9s1.9.4 2.9 1.4" stroke="rgba(255,255,255,.9)" stroke-width="1.4" stroke-linecap="round"/><path d="M2.5 4.8C4.2 3 6 2.1 8 2.1s3.8.9 5.5 2.7" stroke="rgba(255,255,255,.28)" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x=".6" y=".6" width="21" height="11.8" rx="3.2" stroke="rgba(255,255,255,.28)" stroke-width="1.2"/><rect x="2" y="2" width="17" height="9" rx="2" fill="rgba(255,255,255,.9)"/><path d="M23.5 4.5v4" stroke="rgba(255,255,255,.28)" stroke-width="2" stroke-linecap="round"/></svg>
     </div>
   </div>
 
   <div class="screen">
 
-    <!-- ══ HOME ══ -->
-    <div class="pane show" id="p-home">
-      <div class="header">
-        <div class="logo">Gate<em>Live</em></div>
-        <div class="badge badge-on"><span class="pulse"></span>Boarding</div>
-      </div>
+    <!-- ═══════════════════ MAIN SCREEN ═══════════════════ -->
+    <div id="sv-main" class="sv show">
 
-      <div class="card hero">
-        <div class="hero-top">
-          <div>
-<div class="ts" style="margin-top:4px;">Passenger view</div>
-          </div>
-          <div class="hero-meta">
-            <div class="hero-pill">
-              <div class="hero-k">Flight</div>
-              <div class="hero-v">AA 2847</div>
-            </div>
-            <div class="hero-pill">
-              <div class="hero-k">Gate</div>
-              <div class="hero-v">B22</div>
-            </div>
+      <div class="hdr">
+        <div style="font-size:12.5px;color:var(--t3);font-weight:500;">Mon, Apr 21</div>
+        <div class="hdr-right">
+          <div class="boarding-badge"><span class="pulse"></span>Boarding</div>
+          <!-- Settings button → language modal -->
+          <div class="settings-btn" onclick="openModal('modal-lang')" title="Settings">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+            </svg>
           </div>
         </div>
-        <div class="route">
-          <div style="text-align:center"><div class="iata">ORD</div><div class="cname">Chicago</div></div>
-          <div class="rmid"><div class="rl rl-l"></div><div class="pdot"></div><div class="rl rl-r"></div></div>
-          <div style="text-align:center"><div class="iata">JFK</div><div class="cname">New York</div></div>
-        </div>
-        <div class="cdlbl">Boarding time</div>
-        <div style="text-align:center;margin-bottom:10px;">
-          <div style="font-size:62px;font-weight:800;letter-spacing:-3px;line-height:1;color:var(--t1);">11:20</div>
-          <div class="ts" style="margin-top:6px;font-size:12px;">On time · Arrives 3:05 PM</div>
-        </div>
-        <div class="cdlbl" style="font-size:9px;margin-bottom:6px;">Countdown</div>
-        <div class="cdown" style="transform:scale(.72);transform-origin:center top;margin:4px 0 -10px;">
-          <div class="cu"><div class="cn" id="ch">00</div><div class="csub">hr</div></div>
-          <div class="csep">:</div>
-          <div class="cu"><div class="cn" id="cm">30</div><div class="csub">min</div></div>
-          <div class="csep">:</div>
-          <div class="cu"><div class="cn" id="csc">00</div><div class="csub">sec</div></div>
-        </div>
       </div>
 
-      <div class="grid2">
-        <div class="card"><div class="tl">Seat</div><div class="tv">14A</div><div class="ts">Window · Economy</div></div>
-        <div class="card"><div class="tl">Departure</div><div class="tv" style="font-size:20px;">11:50</div><div class="ts">Boarding now</div></div>
-      </div>
-
-      <!-- Alert -->
-      <div class="alert-strip card-amber">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        <div><div class="amsg">Gate changed from B18 to B22</div><div class="atime">22 minutes ago</div></div>
-      </div>
-
-      <!-- Map -->
-      <div class="card" style="padding:12px 12px 0;">
-        <div class="map-ph">
-          <div class="map-bg"></div>
-          <div class="map-grid"></div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:1;flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span class="map-lbl">Gate B22 — 8 min walk</span>
+      <!-- Flight card — click to open detail modal -->
+      <div class="flight-card-wrap" onclick="openModal('modal-flight')">
+        <div class="card card-blue" style="margin:0;cursor:pointer;">
+          <div class="flight-meta">
+            <div><div class="lbl">Flight</div><div class="fm-val">AA 2847</div></div>
+            <div style="text-align:right;"><div class="lbl">Gate</div><div class="fm-val">B22</div></div>
+          </div>
+          <div class="route">
+            <div class="rcity">
+              <div class="iata">ORD</div>
+              <div class="rtime-lbl">Depart</div>
+              <div class="rtime-val">11:50 AM</div>
+            </div>
+            <div class="rmid">
+              <div class="rline rline-l"></div><div class="rdot"></div><div class="rline rline-r"></div>
+            </div>
+            <div class="rcity" style="text-align:right;">
+              <div class="iata">JFK</div>
+              <div class="rtime-lbl">Arrive</div>
+              <div class="rtime-val">3:05 PM</div>
+            </div>
+          </div>
+          <div class="bt-section">
+            <div class="bt-lbl">Boarding Time</div>
+            <div class="bt-time">11:20 AM</div>
+            <div class="cd-lbl">Boarding Countdown</div>
+            <div class="cd-row">
+              <div class="cd-unit"><div class="cn" id="ch">00</div><div class="cs">hr</div></div>
+              <div class="cd-sep">:</div>
+              <div class="cd-unit"><div class="cn" id="cm">30</div><div class="cs">min</div></div>
+              <div class="cd-sep">:</div>
+              <div class="cd-unit"><div class="cn" id="cs2">00</div><div class="cs">sec</div></div>
+            </div>
+          </div>
         </div>
       </div>
 
+      <!-- Gate change alert (amber, like original HTML) — clickable to announcements -->
+      <div class="alert alert-amber" style="margin-top:10px;cursor:pointer;" onclick="goTo('sv-ann')" title="View all announcements">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div style="flex:1;">
+          <div class="alert-msg">Gate changed from B18 to B22</div>
+          <div style="font-size:11px;color:rgba(245,192,48,.65);">Head to Terminal 3 · Gate B22</div>
+        </div>
+        <div class="alert-time">22 min ago</div>
+      </div>
+
+      <!-- Final call alert — clickable to announcements -->
+      <div class="alert alert-muted" style="cursor:pointer;" onclick="goTo('sv-ann')" title="View all announcements">
+        <div style="width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0;margin-top:5px;"></div>
+        <div class="alert-body" style="flex:1;">Final call — passengers connecting to Miami, gate D11</div>
+        <div class="alert-time">11 min ago</div>
+      </div>
+
+      <!-- Seat + Boarding Group (locked) -->
+      <div class="info-row">
+        <div class="info-card">
+          <div class="lbl">Seat</div>
+          <div class="locked-btn" id="seat-lock" onclick="openScan('seat')">
+            <svg width="11" height="13" viewBox="0 0 12 14" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="10" height="7" rx="2"/><path d="M3.5 6V4a2.5 2.5 0 015 0v2"/></svg>
+            <div class="locked-txt">Scan<br>Boarding Pass</div>
+          </div>
+          <div class="unlocked-val" id="seat-val">14A</div>
+          <div class="unlocked-sub" id="seat-sub">Window · Economy</div>
+        </div>
+        <div class="info-card">
+          <div class="lbl">Boarding Gro.</div>
+          <div class="locked-btn" id="bgrp-lock" onclick="openScan('bgrp')">
+            <svg width="11" height="13" viewBox="0 0 12 14" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="10" height="7" rx="2"/><path d="M3.5 6V4a2.5 2.5 0 015 0v2"/></svg>
+            <div class="locked-txt">Scan<br>Boarding Pass</div>
+          </div>
+          <div class="unlocked-val" id="bgrp-val">Group 3</div>
+          <div class="unlocked-sub" id="bgrp-sub">Now Boarding</div>
+        </div>
+      </div>
+
+      <!-- Boarding progress -->
       <div class="sec-lbl">Boarding</div>
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <div style="font-size:13px;" class="t2">Group 3 now boarding</div>
-          <div class="pct">61%</div>
+      <div class="board-sect">
+        <div class="board-top">
+          <div class="board-status">Group 3 now boarding</div>
+          <div class="board-pct">61%</div>
         </div>
         <div class="pb-wrap"><div class="pb-fill" style="width:61%"></div></div>
-        <div class="groups">
-          <div class="grp gd"><div class="grp-n">1</div>Done</div>
-          <div class="grp gd"><div class="grp-n">2</div>Done</div>
-          <div class="grp gn"><div class="grp-n">3</div>Now</div>
-          <div class="grp gw"><div class="grp-n">4</div>Wait</div>
-          <div class="grp gw"><div class="grp-n">5</div>Wait</div>
+        <div class="grp-row">
+          <div class="grp grp-d"><div class="grp-n">1</div>Done</div>
+          <div class="grp grp-d"><div class="grp-n">2</div>Done</div>
+          <div class="grp grp-a"><div class="grp-n">3</div>Now</div>
+          <div class="grp grp-w"><div class="grp-n">4</div>Wait</div>
+          <div class="grp grp-w"><div class="grp-n">5</div>Wait</div>
         </div>
       </div>
 
-      <div class="sec-lbl">Luggage</div>
-      <div class="card">
-        <div class="lug-row">
-          <div class="lug-ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="14" height="14" rx="2"/><path d="M9 7V5a3 3 0 016 0v2"/></svg></div>
-          <div style="flex:1"><div style="font-size:13.5px;font-weight:500;" class="t1">Check-in bag · 23 kg</div><div style="font-size:11.5px;margin-top:2px;" class="t2">Loaded onto aircraft</div></div>
-          <div class="chk"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="var(--green)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6l3 3 5-5"/></svg></div>
-        </div>
+      <!-- Map widget -->
+      <div class="sec-lbl">Terminal Map</div>
+      <div class="map-widget" onclick="openModal('modal-map')">
+        <svg width="100%" height="100%" viewBox="0 0 358 118" preserveAspectRatio="xMidYMid slice">
+          <rect width="358" height="118" fill="#101d35"/>
+          <rect x="0" y="50" width="358" height="18" fill="#172840" opacity=".9"/>
+          <rect x="220" y="10" width="128" height="90" rx="9" fill="#182d48" stroke="#244060" stroke-width="1"/>
+          <circle cx="244" cy="30" r="4" fill="#2a4580" opacity=".7"/><circle cx="268" cy="30" r="4" fill="#2a4580" opacity=".7"/>
+          <circle cx="292" cy="30" r="7" fill="rgba(77,166,255,.25)" stroke="#4da6ff" stroke-width="1.8"/><circle cx="292" cy="30" r="3.5" fill="#4da6ff"/>
+          <circle cx="316" cy="30" r="4" fill="#2a4580" opacity=".7"/>
+          <text x="244" y="44" text-anchor="middle" font-size="7" fill="rgba(255,255,255,.45)" font-family="DM Sans,sans-serif">B18</text>
+          <text x="268" y="44" text-anchor="middle" font-size="7" fill="rgba(255,255,255,.45)" font-family="DM Sans,sans-serif">B20</text>
+          <text x="292" y="44" text-anchor="middle" font-size="8" fill="#4da6ff" font-family="DM Sans,sans-serif" font-weight="700">B22</text>
+          <text x="316" y="44" text-anchor="middle" font-size="7" fill="rgba(255,255,255,.45)" font-family="DM Sans,sans-serif">B24</text>
+          <line x1="48" y1="59" x2="286" y2="59" stroke="#2f80ed" stroke-width="1.5" stroke-dasharray="5,4" opacity=".65"/>
+          <line x1="286" y1="59" x2="286" y2="37" stroke="#2f80ed" stroke-width="1.5" stroke-dasharray="5,4" opacity=".65"/>
+          <circle cx="48" cy="59" r="8" fill="rgba(77,166,255,.15)"/><circle cx="48" cy="59" r="5" fill="rgba(77,166,255,.28)" stroke="#4da6ff" stroke-width="1.5"/><circle cx="48" cy="59" r="2.5" fill="#4da6ff"/>
+          <rect x="10" y="88" width="130" height="21" rx="10.5" fill="rgba(255,255,255,.92)"/>
+          <text x="75" y="102" text-anchor="middle" font-size="9" fill="#1a2d44" font-family="DM Sans,sans-serif" font-weight="700">Gate B22 — 8 min walk</text>
+        </svg>
       </div>
 
+      <!-- Announcements preview — click to view full screen -->
       <div class="sec-lbl">Announcements</div>
-      <div class="card">
-        <div class="ann"><div class="adot" style="background:var(--blue)"></div><div><div style="font-size:12.5px;line-height:1.45;" class="t1">Group 3 is now invited to board at gate B22</div><div style="font-size:10.5px;margin-top:2px;" class="t3">3 min ago</div></div></div>
-        <div class="ann"><div class="adot" style="background:var(--t3)"></div><div><div style="font-size:12.5px;line-height:1.45;" class="t1">Final call — passengers connecting to Miami, gate D11</div><div style="font-size:10.5px;margin-top:2px;" class="t3">11 min ago</div></div></div>
-        <div class="ann"><div class="adot" style="background:var(--t3)"></div><div><div style="font-size:12.5px;line-height:1.45;" class="t1">United 884 to London now boarding at gate C34</div><div style="font-size:10.5px;margin-top:2px;" class="t3">30 min ago</div></div></div>
-      </div>
-    </div>
-
-    <!-- ══ ALERTS ══ -->
-    <div class="pane" id="p-alerts">
-      <div class="ptitle">Alerts</div>
-      <div class="sec-lbl">New</div>
-      <div class="card">
-        <div class="nitem" style="align-items:flex-start;">
-          <div class="nud" style="margin-top:14px;"></div>
-          <div class="nico nb" style="flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-          <div style="flex:1"><div class="ntit">Group 3 now boarding</div><div class="nbdy">Proceed to gate B22. Have your boarding pass and ID ready.</div><div class="nti">Just now</div></div>
-        </div>
-        <div class="nitem" style="align-items:flex-start;">
-          <div class="nud" style="margin-top:14px;"></div>
-          <div class="nico na" style="flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-          <div style="flex:1"><div class="ntit">Gate change</div><div class="nbdy">Your flight has moved from B18 to B22, Terminal 3.</div><div class="nti">22 minutes ago</div></div>
-        </div>
-      </div>
-
-      <div class="sec-lbl">Earlier today</div>
-      <div class="card">
-        <div class="nitem">
-          <div class="nico ng"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="14" height="14" rx="2"/><path d="M9 7V5a3 3 0 016 0v2"/></svg></div>
-          <div style="flex:1"><div class="ntit">Bag loaded</div><div class="nbdy">Your checked bag has been loaded onto AA 2847</div><div class="nti">45 minutes ago</div></div>
-        </div>
-        <div class="nitem">
-          <div class="nico nb"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.5L13 9.5V4a2 2 0 00-4 0v5.5L0 16.5v2l9-2.5V20l-2 1.5V23l3.5-1 3.5 1v-1.5L12 20v-4l9 2.5v-2z"/></svg></div>
-          <div style="flex:1"><div class="ntit">Boarding in 15 min</div><div class="nbdy">AA 2847 to JFK — gate B22, Terminal 3</div><div class="nti">1 hour ago</div></div>
-        </div>
-        <div class="nitem">
-          <div class="nico nb"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <div style="flex:1"><div class="ntit">Flight on time</div><div class="nbdy">AA 2847 confirmed on schedule. Departs 11:20 AM from ORD.</div><div class="nti">2 hours ago</div></div>
-        </div>
-        <div class="nitem">
-          <div class="nico ng"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-          <div style="flex:1"><div class="ntit">Check-in confirmed</div><div class="nbdy">Seat 14A · Boarding pass issued · AA 2847</div><div class="nti">3 hours ago</div></div>
-        </div>
-      </div>
-
-      <div class="sec-lbl">Notification settings</div>
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0 10px;border-bottom:1px solid var(--dv);">
-          <div><div class="ntit" style="font-size:13px;">Boarding calls</div><div class="nbdy" style="font-size:11px;">Alert when your group is called</div></div>
-          <div class="tog-on"><div class="tk"></div></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--dv);">
-          <div><div class="ntit" style="font-size:13px;">Gate changes</div><div class="nbdy" style="font-size:11px;">Immediate push alerts</div></div>
-          <div class="tog-on"><div class="tk"></div></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 5px;">
-          <div><div class="ntit" style="font-size:13px;">Delays</div><div class="nbdy" style="font-size:11px;">Flight status updates</div></div>
-          <div class="tog-off"><div class="tk"></div></div>
-        </div>
-      </div>
-
-      <!-- Language card -->
-      <div class="sec-lbl">Language</div>
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0 10px;border-bottom:1px solid var(--dv);">
-          <div><div class="ntit" style="font-size:13px;">English (US)</div><div class="nbdy" style="font-size:11px;">Interface language</div></div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 5px;">
-          <div><div class="ntit" style="font-size:13px;">Auto-translate PA</div><div class="nbdy" style="font-size:11px;">Translate terminal announcements</div></div>
-          <div class="tog-on"><div class="tk"></div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ BOARDING ══ -->
-    <div class="pane" id="p-board">
-      <div class="ptitle">Boarding</div>
-
-      <div class="card card-blue" style="margin-bottom:10px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <div class="card ann-preview" onclick="goTo('sv-ann')" style="padding-bottom:14px;">
+        <div class="ann-row">
+          <div class="adot" style="background:var(--blue);"></div>
           <div>
-            <div class="tl">Your seat</div>
-            <div style="font-size:38px;font-weight:800;letter-spacing:-1.5px;line-height:1;" class="t1">14A</div>
-            <div style="font-size:11.5px;margin-top:4px;" class="t2">Window · Row 14 · Economy</div>
-          </div>
-          <div style="text-align:right;">
-            <div class="tl">Flight</div>
-            <div style="font-size:19px;font-weight:700;letter-spacing:-.5px;" class="t1">AA 2847</div>
-            <div style="font-size:11.5px;margin-top:4px;" class="t2">ORD → JFK</div>
+            <div class="ann-text">Group 3 is now invited to board at gate B22</div>
+            <div class="ann-time">3 min ago</div>
           </div>
         </div>
-        <!-- Barcode -->
-        <div style="border-top:1px solid var(--dv);padding-top:13px;display:flex;align-items:center;justify-content:center;gap:2px;">
-          <div id="bc"></div>
-          <div style="font-size:9px;letter-spacing:.3px;margin-left:9px;" class="t3">AA2847 · 14A · ORD-JFK</div>
+        <div class="ann-row">
+          <div class="adot" style="background:var(--t3);"></div>
+          <div>
+            <div class="ann-text">Final call — passengers connecting to Miami, gate D11</div>
+            <div class="ann-time">11 min ago</div>
+          </div>
+        </div>
+        <div class="view-all">View all announcements →</div>
+      </div>
+
+    </div><!-- /sv-main -->
+
+    <!-- ═══════════════════ ANNOUNCEMENTS SCREEN ═══════════════════ -->
+    <div id="sv-ann" class="sv">
+
+      <button class="back-btn" onclick="goBack()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back
+      </button>
+
+      <!-- SPEAK ANNOUNCEMENT section — click a timeline item to display here -->
+      <div class="speak-card">
+        <div class="speak-header">Speak Announcement</div>
+        <div class="speak-area" id="speak-area">
+          <div class="speak-placeholder" id="speak-placeholder">Tap an announcement below to display it here</div>
+          <div class="speak-text" id="speak-text" style="display:none;"></div>
+        </div>
+        <div class="speak-hint">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(77,166,255,.5)" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+          Tap any announcement to preview on display board
         </div>
       </div>
 
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <div><div style="font-size:15.5px;font-weight:600;" class="t1">Aircraft boarding</div><div style="font-size:11.5px;margin-top:2px;" class="t2">151 of 247 passengers</div></div>
-          <div class="pct" style="font-size:34px;">61%</div>
+      <div class="sec-lbl" style="margin-top:4px;">Announcement Timeline</div>
+      <div class="card" style="padding:14px 16px;">
+
+        <div class="timeline-item" onclick="speakAnn('Group 3 is now invited to board at gate B22. Please have your boarding pass and ID ready.')">
+          <div class="tl-dot" style="background:var(--blue);box-shadow:0 0 6px var(--blue);"></div>
+          <div class="tl-body">
+            <div class="tl-msg">Group 3 is now invited to board at gate B22</div>
+            <div class="tl-meta">3 min ago · Gate agent</div>
+            <div class="tl-play">▶ Tap to display</div>
+          </div>
         </div>
-        <div class="pb-wrap" style="height:7px;"><div class="pb-fill" style="width:61%"></div></div>
-      </div>
 
-      <div class="sec-lbl">Boarding groups</div>
-      <div class="card">
-        <div class="phase"><div class="pnum pnum-d">1</div><div class="phi"><div class="phtit">First Class</div><div class="phdsc">Rows 1–6 · Pre-board</div></div><div class="pst pst-d">Complete</div></div>
-        <div class="phase"><div class="pnum pnum-d">2</div><div class="phi"><div class="phtit">Priority &amp; Business</div><div class="phdsc">Rows 7–14 · AAdvantage Gold+</div></div><div class="pst pst-d">Complete</div></div>
-        <div class="phase"><div class="pnum pnum-a">3</div><div class="phi"><div class="phtit">Group 3 <span style="font-size:10px;color:var(--blue);font-weight:500;">· Your group</span></div><div class="phdsc">Rows 15–21</div></div><div class="pst pst-a">Boarding</div></div>
-        <div class="phase"><div class="pnum pnum-w">4</div><div class="phi"><div class="phtit">Group 4</div><div class="phdsc">Rows 22–28</div></div><div class="pst pst-w">Waiting</div></div>
-        <div class="phase"><div class="pnum pnum-w">5</div><div class="phi"><div class="phtit">Group 5</div><div class="phdsc">Rows 29–36 · Basic economy</div></div><div class="pst pst-w">Waiting</div></div>
-      </div>
+        <div class="timeline-item" onclick="speakAnn('Final call for all passengers connecting to Miami on flight AA 1840. Please proceed immediately to gate D11.')">
+          <div class="tl-dot" style="background:var(--t3);"></div>
+          <div class="tl-body">
+            <div class="tl-msg">Final call — connecting passengers to Miami, gate D11</div>
+            <div class="tl-meta">11 min ago · PA System</div>
+            <div class="tl-play">▶ Tap to display</div>
+          </div>
+        </div>
 
-      <div class="sec-lbl">Seat location</div>
-      <div class="card" style="padding:14px;">
-        <div style="display:flex;justify-content:center;margin-bottom:8px;">
-          <svg width="180" height="90" viewBox="0 0 180 90">
-            <rect x="18" y="18" width="144" height="54" rx="14" fill="none" stroke="var(--blue)" stroke-width="1.2" stroke-opacity=".35"/>
-            <ellipse cx="162" cy="45" rx="10" ry="20" fill="none" stroke="var(--blue)" stroke-width="1.2" stroke-opacity=".25"/>
-            <line x1="40" y1="18" x2="40" y2="72" stroke="var(--dv)" stroke-width=".7"/>
-            <line x1="60" y1="18" x2="60" y2="72" stroke="var(--dv)" stroke-width=".7"/>
-            <line x1="80" y1="18" x2="80" y2="72" stroke="var(--dv)" stroke-width=".7"/>
-            <line x1="100" y1="18" x2="100" y2="72" stroke="var(--dv)" stroke-width=".7"/>
-            <line x1="120" y1="18" x2="120" y2="72" stroke="var(--dv)" stroke-width=".7"/>
-            <line x1="140" y1="18" x2="140" y2="72" stroke="var(--dv)" stroke-width=".7"/>
-            <polygon points="60,18 100,18 95,6 55,6" fill="none" stroke="var(--blue)" stroke-width="1" stroke-opacity=".25"/>
-            <polygon points="60,72 100,72 95,84 55,84" fill="none" stroke="var(--blue)" stroke-width="1" stroke-opacity=".25"/>
-            <rect x="76" y="22" width="9" height="9" rx="2" fill="var(--blue)" opacity=".9"/>
-            <text x="80.5" y="30" text-anchor="middle" font-size="5.5" fill="#fff" font-weight="700" font-family="DM Sans,sans-serif">14A</text>
+        <div class="timeline-item" onclick="speakAnn('Attention passengers: the gate for American Airlines flight 2847 to New York JFK has changed from B18 to B22. Please proceed to gate B22 in Terminal 3.')">
+          <div class="tl-dot" style="background:var(--amber);"></div>
+          <div class="tl-body">
+            <div class="tl-msg">Gate changed from B18 to B22 — AA 2847 to JFK</div>
+            <div class="tl-meta">22 min ago · Gate agent</div>
+            <div class="tl-play">▶ Tap to display</div>
+          </div>
+        </div>
+
+        <div class="timeline-item" onclick="speakAnn('United Airlines flight 884 to London Heathrow is now boarding at gate C34. All passengers please proceed to gate C34.')">
+          <div class="tl-dot" style="background:var(--t3);"></div>
+          <div class="tl-body">
+            <div class="tl-msg">United 884 to London now boarding at gate C34</div>
+            <div class="tl-meta">30 min ago · PA System</div>
+            <div class="tl-play">▶ Tap to display</div>
+          </div>
+        </div>
+
+        <div class="timeline-item" onclick="speakAnn('Groups 1 and 2 are now boarding American Airlines flight 2847 to New York JFK at gate B22. First class and AAdvantage members please board now.')">
+          <div class="tl-dot" style="background:var(--t3);"></div>
+          <div class="tl-body">
+            <div class="tl-msg">Groups 1 and 2 boarding AA 2847 at gate B22</div>
+            <div class="tl-meta">38 min ago · Gate agent</div>
+            <div class="tl-play">▶ Tap to display</div>
+          </div>
+        </div>
+
+        <div class="timeline-item" onclick="speakAnn('American Airlines flight 2847 to New York JFK is on time. Boarding will begin at gate B22 in approximately 15 minutes. Thank you for your patience.')">
+          <div class="tl-dot" style="background:var(--green);"></div>
+          <div class="tl-body">
+            <div class="tl-msg">AA 2847 on time — boarding begins at gate B22 in 15 min</div>
+            <div class="tl-meta">1 hr ago · System</div>
+            <div class="tl-play">▶ Tap to display</div>
+          </div>
+        </div>
+
+        <div class="timeline-item" onclick="speakAnn('Attention all passengers: the TSA security checkpoint at Terminal 3 is experiencing high volume. Please allow extra time and proceed to the checkpoint as early as possible.')">
+          <div class="tl-dot" style="background:var(--amber);"></div>
+          <div class="tl-body">
+            <div class="tl-msg">TSA checkpoint at Terminal 3 experiencing high volume</div>
+            <div class="tl-meta">1 hr 12 min ago · Airport Operations</div>
+            <div class="tl-play">▶ Tap to display</div>
+          </div>
+        </div>
+
+        <div class="timeline-item" onclick="speakAnn('Southwest Airlines flight 1192 to Dallas Love Field has been delayed. New departure time is 1:45 PM. Passengers please remain near gate A9.')">
+          <div class="tl-dot" style="background:var(--t3);"></div>
+          <div class="tl-body">
+            <div class="tl-msg">WN 1192 to Dallas — delayed, new departure 1:45 PM</div>
+            <div class="tl-meta">1 hr 28 min ago · PA System</div>
+            <div class="tl-play">▶ Tap to display</div>
+          </div>
+        </div>
+
+        <div class="timeline-item" onclick="speakAnn('Attention passengers at gate B22: American Airlines flight 2847 to New York JFK has completed aircraft cleaning and is now ready for boarding. Pre-board passengers and families with small children may board at this time.')">
+          <div class="tl-dot" style="background:var(--blue);"></div>
+          <div class="tl-body">
+            <div class="tl-msg">AA 2847 aircraft ready — pre-board and families now boarding</div>
+            <div class="tl-meta">1 hr 45 min ago · Gate agent</div>
+            <div class="tl-play">▶ Tap to display</div>
+          </div>
+        </div>
+
+        <div class="timeline-item" onclick="speakAnn('This is a reminder that all carry-on bags must fit in the overhead bin or under the seat in front of you. Items exceeding the size limit will need to be checked at the gate.')">
+          <div class="tl-dot" style="background:var(--t3);"></div>
+          <div class="tl-body">
+            <div class="tl-msg">Carry-on size reminder — oversized items must be gate-checked</div>
+            <div class="tl-meta">2 hrs ago · Gate agent</div>
+            <div class="tl-play">▶ Tap to display</div>
+          </div>
+        </div>
+
+        <div class="timeline-item" onclick="speakAnn('Paging passenger Johnson traveling on American Airlines flight 2847. Please report to gate B22 immediately. Your flight is ready for departure.')">
+          <div class="tl-dot" style="background:var(--red);"></div>
+          <div class="tl-body">
+            <div class="tl-msg">Passenger paging — Johnson, please report to gate B22</div>
+            <div class="tl-meta">2 hrs 10 min ago · Gate agent</div>
+            <div class="tl-play">▶ Tap to display</div>
+          </div>
+        </div>
+
+        <div class="timeline-item" onclick="speakAnn('Welcome to O\'Hare International Airport. For your safety and security, do not leave your baggage unattended at any time. Report any suspicious activity to airport security or call 911.')">
+          <div class="tl-dot" style="background:var(--t3);"></div>
+          <div class="tl-body">
+            <div class="tl-msg">Airport security reminder — do not leave baggage unattended</div>
+            <div class="tl-meta">2 hrs 30 min ago · Airport Security</div>
+            <div class="tl-play">▶ Tap to display</div>
+          </div>
+        </div>
+
+        <div class="timeline-item" onclick="speakAnn('Delta Airlines flight 409 to Atlanta is now boarding at gate E14. All boarding groups are now welcome to board. Please have your boarding pass and ID ready.')">
+          <div class="tl-dot" style="background:var(--t3);"></div>
+          <div class="tl-body">
+            <div class="tl-msg">DL 409 to Atlanta now boarding at gate E14</div>
+            <div class="tl-meta">3 hrs ago · PA System</div>
+            <div class="tl-play">▶ Tap to display</div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /sv-ann -->
+
+    <!-- ═══════════════════ FLIGHT DETAIL MODAL ═══════════════════ -->
+    <!-- Opens when main flight card is tapped -->
+    <div id="modal-flight" class="overlay" onclick="closeModal('modal-flight')">
+      <div class="sheet" onclick="event.stopPropagation()" style="padding-bottom:30px;">
+        <div class="handle"></div>
+        <button class="sheet-close" onclick="closeModal('modal-flight')">✕</button>
+        <div class="flight-detail-scroll">
+          <div class="fd-hdr">
+            <div>
+              <div class="fd-lbl">Flight</div>
+              <div class="fd-flight">AA 2847 · ORD → JFK</div>
+            </div>
+            <div class="canceled-badge">Canceled</div>
+          </div>
+
+          <!-- Delta counter map -->
+          <div class="fd-sec">
+            <div class="fd-sec-ttl">Delta's Counter</div>
+            <div class="ctr-map" onclick="closeModal('modal-flight');setTimeout(()=>openModal('modal-map'),200);">
+              <svg width="100%" height="100%" viewBox="0 0 326 88" preserveAspectRatio="xMidYMid slice">
+                <rect width="326" height="88" fill="#101d35"/>
+                <rect x="0" y="36" width="326" height="16" fill="#172840" opacity=".9"/>
+                <rect x="18" y="10" width="88" height="50" rx="7" fill="#182d48" stroke="#244060" stroke-width="1"/>
+                <text x="62" y="32" text-anchor="middle" font-size="9" fill="#4da6ff" font-family="DM Sans,sans-serif" font-weight="700">Delta</text>
+                <text x="62" y="45" text-anchor="middle" font-size="8" fill="rgba(255,255,255,.45)" font-family="DM Sans,sans-serif">Counter · T-B</text>
+                <circle cx="62" cy="22" r="5" fill="rgba(255,95,95,.2)" stroke="#ff5f5f" stroke-width="1.5"/><circle cx="62" cy="22" r="2.5" fill="#ff5f5f"/>
+                <line x1="195" y1="44" x2="110" y2="44" stroke="#ff5f5f" stroke-width="1.5" stroke-dasharray="5,4" opacity=".6"/>
+                <circle cx="195" cy="44" r="7" fill="rgba(77,166,255,.15)"/><circle cx="195" cy="44" r="4" fill="rgba(77,166,255,.3)" stroke="#4da6ff" stroke-width="1.5"/><circle cx="195" cy="44" r="2" fill="#4da6ff"/>
+                <rect x="120" y="66" width="90" height="17" rx="8.5" fill="rgba(255,255,255,.9)"/>
+                <text x="165" y="78" text-anchor="middle" font-size="8" fill="#1a2d44" font-family="DM Sans,sans-serif" font-weight="700">5 min walk</text>
+              </svg>
+            </div>
+            <div class="ctr-note">Head to Delta's customer service counter in Terminal B for rebooking assistance.</div>
+          </div>
+
+          <!-- Next steps -->
+          <div class="fd-sec">
+            <div class="fd-sec-ttl">Next Steps</div>
+            <div class="step"><div class="step-num">1</div><div class="step-txt">Visit Delta's counter in Terminal B or open the Delta app to rebook at no extra cost.</div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-txt">Request a meal voucher and hotel stay if your new departure is 4+ hours away.</div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-txt">Retrieve your checked bag from baggage claim if you're rebooking onto a different flight.</div></div>
+          </div>
+
+          <!-- Other options -->
+          <div class="fd-sec">
+            <div class="fd-sec-ttl">Other Flight Options</div>
+            <button class="opt-btn"><div><div>AA 2901 · ORD → JFK</div><div class="opt-sub">Departs 2:45 PM · 2 seats left</div></div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <button class="opt-btn"><div><div>AA 3344 · ORD → JFK</div><div class="opt-sub">Departs 5:10 PM · Available</div></div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <button class="opt-btn"><div><div>DL 4102 · ORD → JFK</div><div class="opt-sub">Departs 3:30 PM · Partner airline</div></div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <button class="see-more">See More Options</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ LANGUAGE / SETTINGS MODAL ═══════════════════ -->
+    <div id="modal-lang" class="overlay" onclick="closeModal('modal-lang')">
+      <div class="sheet sheet-light" onclick="event.stopPropagation()" style="padding-bottom:40px;">
+        <div class="handle"></div>
+        <button class="sheet-close" onclick="closeModal('modal-lang')">✕</button>
+
+        <!-- Language pill button -->
+        <div style="position:relative;margin-bottom:0;">
+          <button class="lang-pill" id="lang-btn" onclick="toggleLangDropdown()">
+            <span id="lang-selected">LANGUAGE</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="rgba(0,0,0,.55)" style="flex-shrink:0;"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <!-- Dropdown (appears below) -->
+          <div class="lang-dropdown" id="lang-dropdown" style="top:56px;">
+            <div class="lang-option active" onclick="selectLang('English (US)')">English (US)</div>
+            <div class="lang-option" onclick="selectLang('Español')">Español</div>
+            <div class="lang-option" onclick="selectLang('Français')">Français</div>
+            <div class="lang-option" onclick="selectLang('中文')">中文</div>
+            <div class="lang-option" onclick="selectLang('Deutsch')">Deutsch</div>
+            <div class="lang-option" onclick="selectLang('日本語')">日本語</div>
+            <div class="lang-option" onclick="selectLang('한국어')">한국어</div>
+            <div class="lang-option" onclick="selectLang('Português')">Português</div>
+          </div>
+        </div>
+
+        <!-- Scan Boarding Pass pill button -->
+        <button class="scan-pill" style="margin-top:14px;" onclick="closeModal('modal-lang');setTimeout(()=>openScan('seat'),200);">
+          SCAN BOARDING PASS
+        </button>
+
+        <!-- Divider + note -->
+        <div style="border-top:1px solid rgba(0,0,0,.1);margin:20px 0 14px;"></div>
+        <div style="font-size:11px;color:rgba(0,0,0,.4);text-align:center;line-height:1.5;">Interface language affects all text and announcements.<br>Scan your boarding pass to unlock seat &amp; group info.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ SCAN BOARDING PASS MODAL ═══════════════════ -->
+    <div id="modal-scan" class="overlay" onclick="closeModal('modal-scan')">
+      <div class="sheet" onclick="event.stopPropagation()">
+        <div class="handle"></div>
+        <button class="sheet-close" onclick="closeModal('modal-scan')">✕</button>
+        <div class="sheet-title">Scan Boarding Pass</div>
+        <div class="sheet-sub">Hold your boarding pass up to the camera</div>
+        <div class="scan-box">
+          <div class="sc-corner tl"></div><div class="sc-corner tr"></div>
+          <div class="sc-corner bl"></div><div class="sc-corner br"></div>
+          <div class="scan-line"></div>
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="rgba(77,166,255,.5)" stroke-width="1.3" stroke-linecap="round" style="z-index:1;">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/>
+            <line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/>
+          </svg>
+          <div class="scan-note">Position barcode within frame</div>
+        </div>
+        <button class="btn-primary" onclick="completeScan()">Boarding Pass Confirmed ✓</button>
+        <button class="btn-ghost" onclick="closeModal('modal-scan')">Cancel</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ FULL MAP MODAL ═══════════════════ -->
+    <div id="modal-map" class="overlay" onclick="closeModal('modal-map')">
+      <div class="sheet" onclick="event.stopPropagation()" style="padding-bottom:28px;">
+        <div class="handle"></div>
+        <button class="sheet-close" onclick="closeModal('modal-map')">✕</button>
+        <div class="sheet-title">Terminal Map</div>
+        <div class="sheet-sub">O'Hare International · Terminal B</div>
+        <div class="map-full">
+          <svg width="100%" height="100%" viewBox="0 0 340 400" preserveAspectRatio="xMidYMid slice">
+            <rect width="340" height="400" fill="#0e1c30"/>
+            <rect x="0" y="178" width="340" height="44" fill="#172840" opacity=".95"/>
+            <rect x="22" y="14" width="296" height="144" rx="10" fill="#162438" stroke="#244060" stroke-width="1"/>
+            <rect x="38" y="22" width="264" height="60" rx="7" fill="#1b2f4a"/>
+            <circle cx="70" cy="52" r="5" fill="#243a60" stroke="#345080" stroke-width="1"/>
+            <circle cx="108" cy="52" r="5" fill="#243a60" stroke="#345080" stroke-width="1"/>
+            <circle cx="146" cy="52" r="5" fill="#243a60" stroke="#345080" stroke-width="1"/>
+            <circle cx="184" cy="52" r="5" fill="#243a60" stroke="#345080" stroke-width="1"/>
+            <circle cx="222" cy="52" r="9" fill="rgba(77,166,255,.2)" stroke="#4da6ff" stroke-width="2"/>
+            <circle cx="222" cy="52" r="4.5" fill="#4da6ff"/>
+            <circle cx="260" cy="52" r="5" fill="#243a60" stroke="#345080" stroke-width="1"/>
+            <circle cx="298" cy="52" r="5" fill="#243a60" stroke="#345080" stroke-width="1"/>
+            <circle cx="222" cy="52" r="18" fill="rgba(77,166,255,.07)"/>
+            <text x="70" y="67" text-anchor="middle" font-size="8.5" fill="rgba(255,255,255,.5)" font-family="DM Sans,sans-serif">B16</text>
+            <text x="108" y="67" text-anchor="middle" font-size="8.5" fill="rgba(255,255,255,.5)" font-family="DM Sans,sans-serif">B18</text>
+            <text x="146" y="67" text-anchor="middle" font-size="8.5" fill="rgba(255,255,255,.5)" font-family="DM Sans,sans-serif">B20</text>
+            <text x="184" y="67" text-anchor="middle" font-size="8.5" fill="rgba(255,255,255,.5)" font-family="DM Sans,sans-serif">B21</text>
+            <text x="222" y="67" text-anchor="middle" font-size="9.5" fill="#4da6ff" font-family="DM Sans,sans-serif" font-weight="700">B22</text>
+            <text x="260" y="67" text-anchor="middle" font-size="8.5" fill="rgba(255,255,255,.5)" font-family="DM Sans,sans-serif">B24</text>
+            <text x="298" y="67" text-anchor="middle" font-size="8.5" fill="rgba(255,255,255,.5)" font-family="DM Sans,sans-serif">B26</text>
+            <rect x="40" y="96" width="66" height="50" rx="6" fill="#1b2f4a" stroke="#244060" stroke-width="1"/>
+            <text x="73" y="116" text-anchor="middle" font-size="8" fill="rgba(255,255,255,.7)" font-family="DM Sans,sans-serif">☕ Starbucks</text>
+            <text x="73" y="129" text-anchor="middle" font-size="7" fill="rgba(255,255,255,.4)" font-family="DM Sans,sans-serif">2 min walk</text>
+            <rect x="130" y="96" width="66" height="50" rx="6" fill="#1b2f4a" stroke="#244060" stroke-width="1"/>
+            <text x="163" y="116" text-anchor="middle" font-size="8" fill="rgba(255,255,255,.7)" font-family="DM Sans,sans-serif">📰 Hudson</text>
+            <text x="163" y="129" text-anchor="middle" font-size="7" fill="rgba(255,255,255,.4)" font-family="DM Sans,sans-serif">1 min walk</text>
+            <rect x="222" y="96" width="78" height="50" rx="6" fill="#1b2f4a" stroke="#244060" stroke-width="1"/>
+            <text x="261" y="116" text-anchor="middle" font-size="8" fill="rgba(255,255,255,.7)" font-family="DM Sans,sans-serif">🍔 Wicker</text>
+            <text x="261" y="127" text-anchor="middle" font-size="8" fill="rgba(255,255,255,.7)" font-family="DM Sans,sans-serif">Park Grill</text>
+            <text x="261" y="138" text-anchor="middle" font-size="7" fill="rgba(255,255,255,.4)" font-family="DM Sans,sans-serif">3 min walk</text>
+            <line x1="222" y1="82" x2="222" y2="178" stroke="#4da6ff" stroke-width="1" stroke-dasharray="4,3" opacity=".6"/>
+            <rect x="22" y="242" width="296" height="144" rx="10" fill="#162438" stroke="#244060" stroke-width="1"/>
+            <rect x="38" y="258" width="96" height="60" rx="7" fill="#1b2f4a" stroke="#3a5a90" stroke-width="1"/>
+            <text x="86" y="281" text-anchor="middle" font-size="9" fill="#4da6ff" font-family="DM Sans,sans-serif" font-weight="700">DELTA</text>
+            <text x="86" y="294" text-anchor="middle" font-size="8" fill="rgba(255,255,255,.45)" font-family="DM Sans,sans-serif">Customer Service</text>
+            <text x="86" y="306" text-anchor="middle" font-size="7" fill="rgba(255,255,255,.3)" font-family="DM Sans,sans-serif">Counter · 5 min walk</text>
+            <circle cx="70" cy="200" r="12" fill="rgba(77,166,255,.1)"/>
+            <circle cx="70" cy="200" r="7" fill="rgba(77,166,255,.2)" stroke="#4da6ff" stroke-width="2"/>
+            <circle cx="70" cy="200" r="3.5" fill="#4da6ff"/>
+            <text x="70" y="220" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,.45)" font-family="DM Sans,sans-serif">You are here</text>
+            <path d="M77 200 L222 200 L222 178" stroke="#4da6ff" stroke-width="1.8" stroke-dasharray="5,4" fill="none" opacity=".75"/>
+            <rect x="14" y="375" width="312" height="20" rx="10" fill="rgba(255,255,255,.06)"/>
+            <circle cx="34" cy="385" r="4" fill="#4da6ff"/>
+            <text x="44" y="389" font-size="8" fill="rgba(255,255,255,.5)" font-family="DM Sans,sans-serif">Your Gate (B22)</text>
+            <circle cx="170" cy="385" r="4" fill="rgba(77,166,255,.3)" stroke="#4da6ff" stroke-width="1.5"/>
+            <circle cx="170" cy="385" r="2" fill="#4da6ff"/>
+            <text x="180" y="389" font-size="8" fill="rgba(255,255,255,.5)" font-family="DM Sans,sans-serif">Current location</text>
           </svg>
         </div>
-        <div style="text-align:center;font-size:11px;" class="t2">Seat 14A · left window · front half</div>
-      </div>
-
-      <div class="sec-lbl">Near gate B22</div>
-      <div class="card">
-        <div class="food"><div class="fico">&#9749;</div><div><div style="font-size:13px;font-weight:600;" class="t1">Starbucks</div><div style="font-size:11px;margin-top:2px;" class="t2">Coffee · Open now</div></div><div class="fdist">2 min</div></div>
-        <div class="food"><div class="fico">&#127829;</div><div><div style="font-size:13px;font-weight:600;" class="t1">Wicker Park Grill</div><div style="font-size:11px;margin-top:2px;" class="t2">Food · Closes 1 PM</div></div><div class="fdist">3 min</div></div>
-        <div class="food"><div class="fico">&#128218;</div><div><div style="font-size:13px;font-weight:600;" class="t1">Hudson News</div><div style="font-size:11px;margin-top:2px;" class="t2">Snacks · pharmacy</div></div><div class="fdist">1 min</div></div>
+        <div style="font-size:12px;color:var(--t3);text-align:center;">Gate B22 is <strong style="color:var(--t1);">~8 minutes</strong> walk from your current location</div>
       </div>
     </div>
 
-    <!-- ══ LUGGAGE ══ -->
-    <div class="pane" id="p-lug">
-      <div class="ptitle">Luggage</div>
-
-      <div class="card card-green">
-        <div style="display:flex;align-items:center;gap:14px;">
-          <div style="width:46px;height:46px;border-radius:13px;background:rgba(40,212,126,.14);border:1px solid rgba(40,212,126,.28);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="14" height="14" rx="2"/><path d="M9 7V5a3 3 0 016 0v2"/></svg>
-          </div>
-          <div style="flex:1;"><div style="font-size:15px;font-weight:600;" class="t1">Check-in bag</div><div style="font-size:11.5px;margin-top:2px;" class="t2">23 kg · Tag #DL4829</div></div>
-          <div style="font-size:10.5px;font-weight:600;color:var(--green);background:rgba(40,212,126,.11);border:1px solid rgba(40,212,126,.24);padding:5px 10px;border-radius:8px;">Loaded</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div style="display:flex;align-items:center;gap:14px;">
-          <div style="width:46px;height:46px;border-radius:13px;background:var(--gw-bg);border:1px solid var(--gw-br);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 8.01c0 1-1.55 3.08-2 4-.19.38-.61.71-1 1H5c-.39-.29-.81-.62-1-1C3.55 11.09 2 9 2 8.01V7a2 2 0 012-2h16a2 2 0 012 2v1.01z"/><path d="M8 5V3a2 2 0 014 0v2M12 17v4M8 21h8"/></svg>
-          </div>
-          <div style="flex:1;"><div style="font-size:15px;font-weight:600;" class="t1">Personal item</div><div style="font-size:11.5px;margin-top:2px;" class="t2">Carry-on · Cabin</div></div>
-          <div style="font-size:10.5px;font-weight:600;color:var(--blue);background:rgba(77,166,255,.10);border:1px solid rgba(77,166,255,.22);padding:5px 10px;border-radius:8px;">With you</div>
-        </div>
-      </div>
-
-      <div class="sec-lbl">Live tracking</div>
-      <div class="card">
-        <div class="lstep"><div class="lstep-l"><div class="ldot ldc"></div><div class="lseg lsf"></div></div><div><div style="font-size:13.5px;font-weight:600;" class="t1">Checked in at counter</div><div style="font-size:11.5px;margin-top:2px;" class="t2">Accepted, tagged and weighed · 23 kg</div><div style="font-size:10.5px;margin-top:3px;font-family:'DM Mono',monospace;" class="t3">2:14 PM</div></div></div>
-        <div class="lstep"><div class="lstep-l"><div class="ldot ldc"></div><div class="lseg lsf"></div></div><div><div style="font-size:13.5px;font-weight:600;" class="t1">Security screening</div><div style="font-size:11.5px;margin-top:2px;" class="t2">Cleared TSA — no issues detected</div><div style="font-size:10.5px;margin-top:3px;font-family:'DM Mono',monospace;" class="t3">2:28 PM</div></div></div>
-        <div class="lstep"><div class="lstep-l"><div class="ldot ldc"></div><div class="lseg lsf"></div></div><div><div style="font-size:13.5px;font-weight:600;" class="t1">In transit to gate</div><div style="font-size:11.5px;margin-top:2px;" class="t2">Moving through baggage handling system</div><div style="font-size:10.5px;margin-top:3px;font-family:'DM Mono',monospace;" class="t3">3:05 PM</div></div></div>
-        <div class="lstep"><div class="lstep-l"><div class="ldot ldc"></div><div class="lseg lse"></div></div><div><div style="font-size:13.5px;font-weight:600;" class="t1">Loaded onto aircraft</div><div style="font-size:11.5px;margin-top:2px;" class="t2">Confirmed secure in cargo hold — AA 2847</div><div style="font-size:10.5px;margin-top:3px;font-family:'DM Mono',monospace;" class="t3">3:42 PM</div></div></div>
-        <div class="lstep"><div class="lstep-l"><div class="ldot ldp"></div></div><div><div style="font-size:13.5px;font-weight:600;" class="t2">Arrived at JFK</div><div style="font-size:11.5px;margin-top:2px;" class="t3">Carousel assignment pending</div><div style="font-size:10.5px;margin-top:3px;font-family:'DM Mono',monospace;" class="t3">Est. 3:25 PM</div></div></div>
-      </div>
-
-      <div class="sec-lbl">Baggage claim info</div>
-      <div class="card">
-        <div style="display:flex;gap:12px;align-items:flex-start;padding-bottom:10px;border-bottom:1px solid var(--dv);">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <div style="font-size:12px;line-height:1.4;" class="t2">Average wait at JFK Terminal 4 is 18–24 minutes after landing.</div>
-        </div>
-        <div style="display:flex;gap:12px;align-items:flex-start;padding-top:10px;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-          <div style="font-size:12px;line-height:1.4;" class="t2">You will receive a notification when your carousel is assigned.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Nav -->
-    <div class="nav">
-      <button class="ntab on" onclick="tab('home',this)">
-        <svg class="ni" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        <span class="nl">Home</span>
-      </button>
-      <button class="ntab" onclick="tab('alerts',this)" style="position:relative;">
-        <svg class="ni" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-        <div class="nav-dot"></div>
-        <span class="nl">Alerts</span>
-      </button>
-      <button class="ntab" onclick="tab('board',this)">
-        <svg class="ni" viewBox="0 0 24 24"><path d="M22 16.5L13 9.5V4a2 2 0 00-4 0v5.5L0 16.5v2l9-2.5V20l-2 1.5V23l3.5-1 3.5 1v-1.5L12 20v-4l9 2.5v-2z"/></svg>
-        <span class="nl">Boarding</span>
-      </button>
-      <button class="ntab" onclick="tab('lug',this)">
-        <svg class="ni" viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="14" rx="2"/><path d="M9 7V5a3 3 0 016 0v2"/></svg>
-        <span class="nl">Luggage</span>
-      </button>
-    </div>
-  </div>
-  <div class="hbar"></div>
-</div>
-
-<div class="hint-txt">Gate Live · Passenger Experience Demo · Team 2</div>
+  </div><!-- /screen -->
+</div><!-- /phone -->
 
 <script>
-function toggleTheme(){
-  const h=document.documentElement;
-  const n=h.dataset.theme==='dark'?'light':'dark';
-  h.dataset.theme=n;
-  document.getElementById('tgl-lbl').textContent=n==='dark'?'Dark':'Light';
-}
-function tab(name,btn){
-  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('show'));
-  document.querySelectorAll('.ntab').forEach(b=>b.classList.remove('on'));
-  const el=document.getElementById('p-'+name);
-  el.classList.remove('show');void el.offsetWidth;el.classList.add('show');
-  btn.classList.add('on');
-}
-function tick(){
-  const n=new Date();
-  const h=n.getHours()%12||12;
-  const m=String(n.getMinutes()).padStart(2,'0');
-  document.getElementById('clk').textContent=h+':'+m;
-}
-tick();setInterval(tick,1000);
-const target = Date.now() + (30 * 60 * 1000);
-function countdown(){
-  const d=Math.max(0,target-Date.now());
-  document.getElementById('ch').textContent=String(Math.floor(d/3600000)).padStart(2,'0');
-  document.getElementById('cm').textContent=String(Math.floor(d%3600000/60000)).padStart(2,'0');
-  document.getElementById('csc').textContent=String(Math.floor(d%60000/1000)).padStart(2,'0');
-}
-countdown();setInterval(countdown,1000);
-(function(){
-  const c=document.getElementById('bc');if(!c)return;
-  const w=[1,2,1,3,1,2,2,1,2,1,3,1,1,2,1,2,3,1,2,1,1,2,3,1,1,2,1,2,1,2,3,1,2,1,1,3,1,2,1,2,1,3,1,1,2,1,2,1];
-  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  let total=0;w.forEach((v,i)=>total+=i%2===0?v*1.8+0.8:v*0.5);
-  svg.setAttribute('width',String(Math.round(total)));svg.setAttribute('height','24');svg.style.display='block';
-  let x=0;
-  w.forEach((v,i)=>{
-    if(i%2===0){
-      const r=document.createElementNS('http://www.w3.org/2000/svg','rect');
-      r.setAttribute('x',String(Math.round(x)));r.setAttribute('y','0');
-      r.setAttribute('width',String(v*1.8));r.setAttribute('height','22');
-      r.setAttribute('rx','0.4');r.setAttribute('fill','var(--t2)');
-      svg.appendChild(r);
-      x+=v*1.8+0.8;
-    } else {
-      x+=v*0.5;
-    }
+// ── Screen navigation ──
+let prevScreen = 'sv-main', curScreen = 'sv-main';
+
+function goTo(id) {
+  if (id === curScreen) return;
+  const from = document.getElementById(curScreen);
+  const to = document.getElementById(id);
+  if (!from || !to) return;
+  prevScreen = curScreen; curScreen = id;
+  from.classList.remove('show');
+  from.classList.add('exit-left');
+  // pin start position without transition, then let CSS transition play
+  to.style.transition = 'none';
+  to.style.transform = 'translateX(20px)';
+  to.style.opacity = '0';
+  to.classList.add('show');
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      to.style.transition = '';
+      to.style.transform = '';
+      to.style.opacity = '';
+      setTimeout(() => from.classList.remove('exit-left'), 320);
+    });
   });
-  c.appendChild(svg);
-})();
+}
+
+function goBack() {
+  if (!prevScreen) return;
+  const from = document.getElementById(curScreen);
+  const to = document.getElementById(prevScreen);
+  if (!from || !to) return;
+  const tmp = curScreen; curScreen = prevScreen; prevScreen = tmp;
+  from.classList.remove('show');
+  to.style.transition = 'none';
+  to.style.transform = 'translateX(-20px)';
+  to.style.opacity = '0';
+  to.classList.add('show');
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      to.style.transition = '';
+      to.style.transform = '';
+      to.style.opacity = '';
+    });
+  });
+}
+
+// ── Modals ──
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// ── Language dropdown ──
+function toggleLangDropdown() {
+  document.getElementById('lang-dropdown').classList.toggle('open');
+}
+function selectLang(lang) {
+  document.getElementById('lang-selected').textContent = lang;
+  document.getElementById('lang-dropdown').classList.remove('open');
+  // update active state
+  document.querySelectorAll('.lang-option').forEach(el => {
+    el.classList.toggle('active', el.textContent === lang);
+  });
+}
+
+// ── Scan boarding pass ──
+function openScan(target) { openModal('modal-scan'); }
+function completeScan() {
+  closeModal('modal-scan');
+  revealInfo('seat'); revealInfo('bgrp');
+}
+function revealInfo(id) {
+  const lock = document.getElementById(id + '-lock');
+  const val  = document.getElementById(id + '-val');
+  const sub  = document.getElementById(id + '-sub');
+  if (lock) lock.classList.add('gone');
+  if (val) val.classList.add('show');
+  if (sub) sub.classList.add('show');
+}
+
+// ── Speak announcement ──
+function speakAnn(text) {
+  const placeholder = document.getElementById('speak-placeholder');
+  const display     = document.getElementById('speak-text');
+  placeholder.style.display = 'none';
+  display.style.display = 'block';
+  display.textContent = '';
+  // typewriter effect
+  let i = 0;
+  const timer = setInterval(() => {
+    display.textContent += text[i];
+    i++;
+    if (i >= text.length) clearInterval(timer);
+  }, 22);
+  // scroll speak area into view
+  document.getElementById('speak-area').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ── Countdown (30 min starting now) ──
+let totalSecs = 30 * 60;
+function updateCountdown() {
+  if (totalSecs <= 0) { totalSecs = 0; }
+  const h = Math.floor(totalSecs / 3600);
+  const m = Math.floor((totalSecs % 3600) / 60);
+  const s = totalSecs % 60;
+  document.getElementById('ch').textContent = String(h).padStart(2, '0');
+  document.getElementById('cm').textContent = String(m).padStart(2, '0');
+  document.getElementById('cs2').textContent = String(s).padStart(2, '0');
+  if (totalSecs > 0) totalSecs--;
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ── Clock ──
+function tick() {
+  const now = new Date();
+  document.getElementById('clk').textContent =
+    String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+}
+tick();
+setInterval(tick, 15000);
+
+// Close language dropdown when clicking outside
+document.addEventListener('click', e => {
+  const btn = document.getElementById('lang-btn');
+  const dd  = document.getElementById('lang-dropdown');
+  if (btn && dd && !btn.contains(e.target) && !dd.contains(e.target)) {
+    dd.classList.remove('open');
+  }
+});
 </script>
 </body>
 </html>
