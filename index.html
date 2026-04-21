@@ -47,6 +47,37 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:#04060e;min-heigh
 .settings-btn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--trans);flex-shrink:0;}
 .settings-btn:hover{background:rgba(255,255,255,.14);}
 
+/* Hamburger button */
+.burger-btn{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.11);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;transition:var(--trans);flex-shrink:0;}
+.burger-btn:hover{background:rgba(255,255,255,.13);}
+.burger-line{width:16px;height:2px;border-radius:1px;background:rgba(255,255,255,.75);transition:var(--trans);}
+
+/* Side drawer */
+.drawer-overlay{position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:400;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
+.drawer-overlay.open{opacity:1;pointer-events:auto;}
+.drawer{position:absolute;top:0;left:0;bottom:0;width:260px;background:linear-gradient(170deg,#0f1530 0%,#090c1e 100%);border-right:1px solid rgba(255,255,255,.1);transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:401;display:flex;flex-direction:column;padding:0 0 32px;}
+.drawer-overlay.open .drawer{transform:translateX(0);}
+.drawer-top{padding:56px 20px 20px;border-bottom:1px solid rgba(255,255,255,.07);}
+.drawer-logo{font-size:20px;font-weight:800;letter-spacing:-.6px;color:var(--t1);}
+.drawer-logo em{font-style:normal;color:var(--blue);}
+.drawer-flight{font-size:11px;color:var(--t3);margin-top:4px;letter-spacing:.2px;}
+.drawer-body{flex:1;overflow-y:auto;padding:10px 10px;scrollbar-width:none;}
+.drawer-body::-webkit-scrollbar{display:none;}
+.drawer-sec{font-size:9.5px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;padding:12px 10px 6px;}
+.drawer-item{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;cursor:pointer;transition:var(--trans);margin-bottom:2px;}
+.drawer-item:hover{background:rgba(255,255,255,.07);}
+.drawer-item:active{background:rgba(255,255,255,.1);}
+.di-ico{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.di-blue{background:rgba(77,166,255,.14);border:1px solid rgba(77,166,255,.22);}
+.di-green{background:rgba(40,212,126,.12);border:1px solid rgba(40,212,126,.2);}
+.di-amber{background:rgba(245,192,48,.10);border:1px solid rgba(245,192,48,.2);}
+.di-purple{background:rgba(160,80,255,.12);border:1px solid rgba(160,80,255,.2);}
+.di-muted{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);}
+.di-label{flex:1;}
+.di-title{font-size:13px;font-weight:600;color:var(--t1);}
+.di-sub{font-size:10.5px;color:var(--t3);margin-top:2px;}
+.di-arrow{color:var(--t3);flex-shrink:0;}
+
 /* Flight card */
 .flight-card-wrap{margin:0 16px 10px;cursor:pointer;}
 .flight-card-wrap:hover .card-blue{filter:brightness(1.06);}
@@ -234,7 +265,12 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:#04060e;min-heigh
     <div id="sv-main" class="sv show">
 
       <div class="hdr">
-        <div style="font-size:12.5px;color:var(--t3);font-weight:500;">Mon, Apr 21</div>
+        <!-- Hamburger → side drawer -->
+        <div class="burger-btn" onclick="openDrawer()">
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+        </div>
         <div class="hdr-right">
           <div class="boarding-badge"><span class="pulse"></span>Boarding</div>
           <!-- Settings button → language modal -->
@@ -312,7 +348,7 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:#04060e;min-heigh
           <div class="unlocked-sub" id="seat-sub">Window · Economy</div>
         </div>
         <div class="info-card">
-          <div class="lbl">Boarding Group</div>
+          <div class="lbl">Boarding Gro.</div>
           <div class="locked-btn" id="bgrp-lock" onclick="openScan('bgrp')">
             <svg width="11" height="13" viewBox="0 0 12 14" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="10" height="7" rx="2"/><path d="M3.5 6V4a2.5 2.5 0 015 0v2"/></svg>
             <div class="locked-txt">Scan<br>Boarding Pass</div>
@@ -703,6 +739,93 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:#04060e;min-heigh
       </div>
     </div>
 
+    <!-- ═══════════════════ SIDE DRAWER ═══════════════════ -->
+    <div id="drawer-overlay" class="drawer-overlay" onclick="closeDrawer()">
+      <div class="drawer" onclick="event.stopPropagation()">
+
+        <div class="drawer-top">
+          <div class="drawer-logo">Gate<em>Live</em></div>
+          <div class="drawer-flight">AA 2847 · ORD → JFK</div>
+        </div>
+
+        <div class="drawer-body">
+
+          <div class="drawer-sec">Flight</div>
+
+          <div class="drawer-item" onclick="drawerGo('modal-flight')">
+            <div class="di-ico di-blue">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.5L13 9.5V4a2 2 0 00-4 0v5.5L0 16.5v2l9-2.5V20l-2 1.5V23l3.5-1 3.5 1v-1.5L12 20v-4l9 2.5v-2z"/></svg>
+            </div>
+            <div class="di-label">
+              <div class="di-title">Flight Info</div>
+              <div class="di-sub">Status, options &amp; rebooking</div>
+            </div>
+            <svg class="di-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+
+          <div class="drawer-item" onclick="drawerGo('modal-map')">
+            <div class="di-ico di-blue">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="di-label">
+              <div class="di-title">Terminal Map</div>
+              <div class="di-sub">Gate B22 · 8 min walk</div>
+            </div>
+            <svg class="di-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+
+          <div class="drawer-sec">Boarding</div>
+
+          <div class="drawer-item" onclick="drawerGo('scan')">
+            <div class="di-ico di-green">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+            </div>
+            <div class="di-label">
+              <div class="di-title">Scan Boarding Pass</div>
+              <div class="di-sub">Unlock seat &amp; group info</div>
+            </div>
+            <svg class="di-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+
+          <div class="drawer-item" onclick="drawerGo('sv-ann')">
+            <div class="di-ico di-amber">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            </div>
+            <div class="di-label">
+              <div class="di-title">Announcements</div>
+              <div class="di-sub">Gate updates &amp; PA timeline</div>
+            </div>
+            <svg class="di-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+
+          <div class="drawer-sec">Settings</div>
+
+          <div class="drawer-item" onclick="drawerGo('modal-lang')">
+            <div class="di-ico di-purple">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="rgba(160,80,255,.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+            </div>
+            <div class="di-label">
+              <div class="di-title">Language</div>
+              <div class="di-sub" id="drawer-lang-sub">English (US)</div>
+            </div>
+            <svg class="di-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+
+          <div class="drawer-item" onclick="drawerGo('modal-lang')">
+            <div class="di-ico di-muted">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            </div>
+            <div class="di-label">
+              <div class="di-title">Preferences</div>
+              <div class="di-sub">Notifications &amp; display</div>
+            </div>
+            <svg class="di-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /drawer -->
+
   </div><!-- /screen -->
 </div><!-- /phone -->
 
@@ -757,6 +880,23 @@ function goBack() {
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
+// ── Drawer ──
+function openDrawer()  { document.getElementById('drawer-overlay').classList.add('open'); }
+function closeDrawer() { document.getElementById('drawer-overlay').classList.remove('open'); }
+
+function drawerGo(target) {
+  closeDrawer();
+  setTimeout(() => {
+    if (target === 'scan') {
+      openScan();
+    } else if (target.startsWith('modal-')) {
+      openModal(target);
+    } else {
+      goTo(target);
+    }
+  }, 220);
+}
+
 // ── Language dropdown ──
 function toggleLangDropdown() {
   document.getElementById('lang-dropdown').classList.toggle('open');
@@ -764,10 +904,11 @@ function toggleLangDropdown() {
 function selectLang(lang) {
   document.getElementById('lang-selected').textContent = lang;
   document.getElementById('lang-dropdown').classList.remove('open');
-  // update active state
   document.querySelectorAll('.lang-option').forEach(el => {
     el.classList.toggle('active', el.textContent === lang);
   });
+  const sub = document.getElementById('drawer-lang-sub');
+  if (sub) sub.textContent = lang;
 }
 
 // ── Scan boarding pass ──
