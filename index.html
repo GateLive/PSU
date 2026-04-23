@@ -35,9 +35,9 @@
 .light-mode .alert-muted{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.08);}
 .light-mode .alert-body{color:rgba(10,14,40,.45);}
 .light-mode .sbar{color:var(--sbar-col);}
-.light-mode .caption-wrap{background:rgba(77,166,255,.06);border-color:rgba(77,166,255,.25);}
-.light-mode .caption-output{background:rgba(0,0,0,.05);color:rgba(10,14,40,.85);}
-.light-mode .sec-lbl{color:rgba(10,14,40,.35);}
+.light-mode .speak-card{background:rgba(255,255,255,.7);border-color:rgba(77,166,255,.2);}
+.light-mode .speak-header,.light-mode .sec-lbl{color:rgba(10,14,40,.35);}
+.light-mode .speak-placeholder{color:rgba(10,14,40,.3);}
 .light-mode .ann-row{border-bottom-color:rgba(0,0,0,.06);}
 .light-mode .timeline-item{border-bottom-color:rgba(0,0,0,.06);}
 .light-mode .timeline-item:hover{background:rgba(0,0,0,.02);}
@@ -197,25 +197,13 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:#04060e;height:10
 .back-btn{display:flex;align-items:center;gap:7px;padding:12px 20px 6px;cursor:pointer;color:var(--t2);font-size:13px;font-weight:500;border:none;background:none;font-family:'DM Sans',sans-serif;transition:var(--trans);}
 .back-btn:hover{color:var(--t1);}
 
-/* Live Caption */
-.caption-wrap{margin:0 16px 12px;background:rgba(77,166,255,.06);border:1px solid rgba(77,166,255,.18);border-radius:18px;padding:16px;}
-.caption-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-.caption-ico{width:38px;height:38px;border-radius:11px;background:rgba(77,166,255,.14);border:1px solid rgba(77,166,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.caption-title{font-size:13px;font-weight:700;color:var(--t1);}
-.caption-sub{font-size:10.5px;color:var(--t3);margin-top:2px;}
-.caption-btn{width:100%;padding:14px;border-radius:13px;border:none;background:var(--blue);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:var(--trans);}
-.caption-btn:hover{filter:brightness(1.1);}
-.caption-btn:disabled{opacity:.55;cursor:not-allowed;}
-.caption-btn.listening{background:#e04545;}
-.caption-live{margin-top:12px;}
-.cap-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor;animation:pd 1s infinite;vertical-align:middle;}
-.caption-indicator{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
-.caption-indicator.list{color:#e04545;}
-.caption-indicator.done{color:var(--green);}
-.caption-output{font-size:13px;line-height:1.65;color:var(--t1);background:rgba(0,0,0,.2);border-radius:10px;padding:12px 14px;min-height:48px;}
-.tl-caption-badge{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--blue);background:rgba(77,166,255,.12);border:1px solid rgba(77,166,255,.2);border-radius:6px;padding:2px 7px;display:inline-block;margin-bottom:5px;}
-@keyframes tlSlideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
-.tl-new{animation:tlSlideIn .35s ease;}
+/* Announcements screen */
+.speak-card{margin:0 16px 10px;background:#0d1428;border:1px solid rgba(77,166,255,.15);border-radius:16px;overflow:hidden;}
+.speak-header{font-size:10.5px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;padding:12px 16px 10px;}
+.speak-area{min-height:180px;padding:12px 16px 16px;display:flex;align-items:flex-start;}
+.speak-text{font-size:13px;line-height:1.6;color:var(--t2);font-style:italic;}
+.speak-placeholder{font-size:12px;color:var(--t3);}
+.speak-hint{font-size:10px;color:rgba(77,166,255,.5);padding:0 16px 12px;display:flex;align-items:center;gap:5px;}
 
 .timeline-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:var(--trans);}
 .timeline-item:hover{background:rgba(255,255,255,.02);}
@@ -485,131 +473,136 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:#04060e;height:10
         Back
       </button>
 
-      <!-- LIVE CAPTION for deaf / hard-of-hearing passengers -->
-      <div class="caption-wrap">
-        <div class="caption-hdr">
-          <div class="caption-ico">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4da6ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-          </div>
-          <div>
-            <div class="caption-title">Live PA Caption</div>
-            <div class="caption-sub">Tap when a PA announcement is playing to transcribe it</div>
-          </div>
+      <!-- Gate PA transcription display -->
+      <div class="speak-card">
+        <div class="speak-header">Gate PA — Transcribed Message</div>
+        <div class="speak-area" id="speak-area">
+          <div class="speak-placeholder" id="speak-placeholder">Messages from the gate will appear here</div>
+          <div class="speak-text" id="speak-text" style="display:none;"></div>
         </div>
-        <button class="caption-btn" id="caption-btn" onclick="startCaption()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
-          Tap to Transcribe Live Announcement
-        </button>
-        <div class="caption-live" id="caption-live" style="display:none;">
-          <div class="caption-indicator list" id="caption-indicator"><span class="cap-dot"></span> Listening…</div>
-          <div class="caption-output" id="caption-output"></div>
+        <div class="speak-hint">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(77,166,255,.5)" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+          Tap any announcement below to display it here
         </div>
       </div>
 
       <div class="sec-lbl" style="margin-top:4px;">Announcement Timeline</div>
-      <div class="card" style="padding:14px 16px;" id="ann-timeline">
+      <div class="card" style="padding:14px 16px;">
 
-        <div class="timeline-item">
+        <div class="timeline-item" onclick="speakAnn('Group 3 is now invited to board at gate B22. Please have your boarding pass and ID ready.')">
           <div class="tl-dot" style="background:var(--blue);box-shadow:0 0 6px var(--blue);"></div>
           <div class="tl-body">
             <div class="tl-msg">Group 3 is now invited to board at gate B22</div>
             <div class="tl-meta">3 min ago · Gate agent</div>
+            <div class="tl-play">▶ Tap to display</div>
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item" onclick="speakAnn('Final call for all passengers connecting to Miami on flight AA 1840. Please proceed immediately to gate D11.')">
           <div class="tl-dot" style="background:var(--t3);"></div>
           <div class="tl-body">
             <div class="tl-msg">Final call — connecting passengers to Miami, gate D11</div>
             <div class="tl-meta">11 min ago · PA System</div>
+            <div class="tl-play">▶ Tap to display</div>
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item" onclick="speakAnn('Attention passengers: the gate for American Airlines flight 2847 to New York JFK has changed from B18 to B22. Please proceed to gate B22 in Terminal 3.')">
           <div class="tl-dot" style="background:var(--amber);"></div>
           <div class="tl-body">
             <div class="tl-msg">Gate changed from B18 to B22 — AA 2847 to JFK</div>
             <div class="tl-meta">22 min ago · Gate agent</div>
+            <div class="tl-play">▶ Tap to display</div>
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item" onclick="speakAnn('United Airlines flight 884 to London Heathrow is now boarding at gate C34. All passengers please proceed to gate C34.')">
           <div class="tl-dot" style="background:var(--t3);"></div>
           <div class="tl-body">
             <div class="tl-msg">United 884 to London now boarding at gate C34</div>
             <div class="tl-meta">30 min ago · PA System</div>
+            <div class="tl-play">▶ Tap to display</div>
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item" onclick="speakAnn('Groups 1 and 2 are now boarding American Airlines flight 2847 to New York JFK at gate B22. First class and AAdvantage members please board now.')">
           <div class="tl-dot" style="background:var(--t3);"></div>
           <div class="tl-body">
             <div class="tl-msg">Groups 1 and 2 boarding AA 2847 at gate B22</div>
             <div class="tl-meta">38 min ago · Gate agent</div>
+            <div class="tl-play">▶ Tap to display</div>
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item" onclick="speakAnn('American Airlines flight 2847 to New York JFK is on time. Boarding will begin at gate B22 in approximately 15 minutes. Thank you for your patience.')">
           <div class="tl-dot" style="background:var(--green);"></div>
           <div class="tl-body">
             <div class="tl-msg">AA 2847 on time — boarding begins at gate B22 in 15 min</div>
             <div class="tl-meta">1 hr ago · System</div>
+            <div class="tl-play">▶ Tap to display</div>
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item" onclick="speakAnn('Attention all passengers: the TSA security checkpoint at Terminal 3 is experiencing high volume. Please allow extra time and proceed to the checkpoint as early as possible.')">
           <div class="tl-dot" style="background:var(--amber);"></div>
           <div class="tl-body">
             <div class="tl-msg">TSA checkpoint at Terminal 3 experiencing high volume</div>
             <div class="tl-meta">1 hr 12 min ago · Airport Operations</div>
+            <div class="tl-play">▶ Tap to display</div>
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item" onclick="speakAnn('Southwest Airlines flight 1192 to Dallas Love Field has been delayed. New departure time is 1:45 PM. Passengers please remain near gate A9.')">
           <div class="tl-dot" style="background:var(--t3);"></div>
           <div class="tl-body">
             <div class="tl-msg">WN 1192 to Dallas — delayed, new departure 1:45 PM</div>
             <div class="tl-meta">1 hr 28 min ago · PA System</div>
+            <div class="tl-play">▶ Tap to display</div>
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item" onclick="speakAnn('Attention passengers at gate B22: American Airlines flight 2847 to New York JFK has completed aircraft cleaning and is now ready for boarding. Pre-board passengers and families with small children may board at this time.')">
           <div class="tl-dot" style="background:var(--blue);"></div>
           <div class="tl-body">
             <div class="tl-msg">AA 2847 aircraft ready — pre-board and families now boarding</div>
             <div class="tl-meta">1 hr 45 min ago · Gate agent</div>
+            <div class="tl-play">▶ Tap to display</div>
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item" onclick="speakAnn('This is a reminder that all carry-on bags must fit in the overhead bin or under the seat in front of you. Items exceeding the size limit will need to be checked at the gate.')">
           <div class="tl-dot" style="background:var(--t3);"></div>
           <div class="tl-body">
             <div class="tl-msg">Carry-on size reminder — oversized items must be gate-checked</div>
             <div class="tl-meta">2 hrs ago · Gate agent</div>
+            <div class="tl-play">▶ Tap to display</div>
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item" onclick="speakAnn('Paging passenger Johnson traveling on American Airlines flight 2847. Please report to gate B22 immediately. Your flight is ready for departure.')">
           <div class="tl-dot" style="background:var(--red);"></div>
           <div class="tl-body">
             <div class="tl-msg">Passenger paging — Johnson, please report to gate B22</div>
             <div class="tl-meta">2 hrs 10 min ago · Gate agent</div>
+            <div class="tl-play">▶ Tap to display</div>
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item" onclick="speakAnn('Welcome to O\'Hare International Airport. For your safety and security, do not leave your baggage unattended at any time. Report any suspicious activity to airport security or call 911.')">
           <div class="tl-dot" style="background:var(--t3);"></div>
           <div class="tl-body">
             <div class="tl-msg">Airport security reminder — do not leave baggage unattended</div>
             <div class="tl-meta">2 hrs 30 min ago · Airport Security</div>
+            <div class="tl-play">▶ Tap to display</div>
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item" onclick="speakAnn('Delta Airlines flight 409 to Atlanta is now boarding at gate E14. All boarding groups are now welcome to board. Please have your boarding pass and ID ready.')">
           <div class="tl-dot" style="background:var(--t3);"></div>
           <div class="tl-body">
             <div class="tl-msg">DL 409 to Atlanta now boarding at gate E14</div>
             <div class="tl-meta">3 hrs ago · PA System</div>
+            <div class="tl-play">▶ Tap to display</div>
           </div>
         </div>
 
@@ -1107,68 +1100,20 @@ function revealInfo(id) {
   if (sub) sub.classList.add('show');
 }
 
-// ── Live Caption (accessibility) ──
-const captionScripts = [
-  "Attention passengers at gate B22: Group 4 for American Airlines flight 2847 to New York JFK is now invited to board. Please have your boarding pass and ID ready.",
-  "Final boarding call for American Airlines flight 2847 to New York JFK. All remaining passengers please proceed immediately to gate B22.",
-  "Attention all passengers: the moving walkway near gate B20 is temporarily out of service. Please allow additional walking time to your gate.",
-  "This is a reminder from American Airlines — passengers with oversized carry-on bags may be asked to gate-check their items at no charge.",
-];
-let captionIdx = 0, captionRunning = false;
-
-function startCaption() {
-  if (captionRunning) return;
-  captionRunning = true;
-  const btn  = document.getElementById('caption-btn');
-  const live = document.getElementById('caption-live');
-  const ind  = document.getElementById('caption-indicator');
-  const out  = document.getElementById('caption-output');
-
-  btn.disabled = true;
-  btn.classList.add('listening');
-  btn.innerHTML = '<span class="cap-dot"></span> Listening…';
-  live.style.display = 'block';
-  out.textContent = '';
-  ind.className = 'caption-indicator list';
-  ind.innerHTML = '<span class="cap-dot"></span> Listening…';
-
-  const text = captionScripts[captionIdx % captionScripts.length];
-  captionIdx++;
-
-  setTimeout(() => {
-    ind.innerHTML = '<span class="cap-dot"></span> Transcribing…';
-    let i = 0;
-    const iv = setInterval(() => {
-      out.textContent = text.slice(0, ++i);
-      if (i >= text.length) {
-        clearInterval(iv);
-        ind.className = 'caption-indicator done';
-        ind.textContent = '✓ Transcription complete — saved to timeline';
-        setTimeout(() => {
-          addCaptionToTimeline(text);
-          btn.disabled = false;
-          btn.classList.remove('listening');
-          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg> Tap to Transcribe Live Announcement';
-          captionRunning = false;
-        }, 900);
-      }
-    }, 16);
-  }, 1400);
-}
-
-function addCaptionToTimeline(text) {
-  const timeline = document.getElementById('ann-timeline');
-  const item = document.createElement('div');
-  item.className = 'timeline-item tl-new';
-  item.innerHTML = `
-    <div class="tl-dot" style="background:var(--blue);box-shadow:0 0 8px var(--blue);"></div>
-    <div class="tl-body">
-      <div class="tl-caption-badge">LIVE CAPTION</div>
-      <div class="tl-msg">${text}</div>
-      <div class="tl-meta">Just now · Live PA Transcription</div>
-    </div>`;
-  timeline.insertBefore(item, timeline.firstChild);
-  item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+// ── Gate PA transcription display ──
+function speakAnn(text) {
+  const placeholder = document.getElementById('speak-placeholder');
+  const display     = document.getElementById('speak-text');
+  placeholder.style.display = 'none';
+  display.style.display = 'block';
+  display.textContent = '';
+  let i = 0;
+  const timer = setInterval(() => {
+    display.textContent += text[i];
+    i++;
+    if (i >= text.length) clearInterval(timer);
+  }, 22);
+  document.getElementById('speak-area').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // ── Countdown (30 min starting now) ──
